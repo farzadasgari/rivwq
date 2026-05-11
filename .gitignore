@@ -4,8 +4,7 @@ __pycache__/
 *.pyd
 *.egg-info/
 .pytest_cache/
-dataset/
+/data/
 venv/
-config.py
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
