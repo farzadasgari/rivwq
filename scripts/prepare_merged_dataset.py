@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from sedis.data.convertor import make_merged_dataset
+from rivwq.data.convertor import make_merged_dataset
 
 
 def parse_args():
