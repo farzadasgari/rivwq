@@ -1,4 +1,4 @@
-name: sedis
+name: rivwq
 channels:
   - conda-forge
 dependencies:
