@@ -42,7 +42,7 @@ source venv/bin/activate
 # Windows (PowerShell)
 venv\Scripts\Activate.ps1
 
-# Windows (PowerShell)
+# Windows (CMD)
 venv\Scripts\activate
 
 pip install --upgrade pip
@@ -80,7 +80,7 @@ For any inquiries, please contact:
 
 ### Links
 
-##### Farzad Asgari
+#### Farzad Asgari
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://farzadasgari.ir/)
 
 [![Google Scholar Badge](https://img.shields.io/badge/Google%20Scholar-4285F4?logo=googlescholar&logoColor=fff&style=for-the-badge)](https://scholar.google.com/citations?user=Rhue_kkAAAAJ&hl=en)
@@ -91,7 +91,7 @@ For any inquiries, please contact:
 
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--3800--0408-A6CE39?logo=orcid&logoColor=fff&style=for-the-badge)](https://orcid.org/0009-0008-3800-0408)
 
-##### Seyed Hossein Mohajeri
+#### Seyed Hossein Mohajeri
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://khu.ac.ir/cv/1139/Seyed-Hossein-Mohajeri)
 
 [![Google Scholar Badge](https://img.shields.io/badge/Google%20Scholar-4285F4?logo=googlescholar&logoColor=fff&style=for-the-badge)](https://scholar.google.com/citations?user=E8PFUBEAAAAJ&hl=en)
