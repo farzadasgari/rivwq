@@ -1,0 +1,15 @@
+families:
+  - linear
+  - harmonic_seasonal
+  - random_forest
+  - mlp
+  - gradient_boosting
+  - stack
+search_spaces:
+  random_forest: null
+  mlp: null
+  gradient_boosting: null
+  stack: null
+optimization:
+  trials: null
+  seed: null

@@ -1,0 +1,21 @@
+stations:
+  - usgs_number: "06888990"
+    name: null
+    latitude: null
+    longitude: null
+    role: primary
+  - usgs_number: "06887500"
+    name: Wamego
+    latitude: null
+    longitude: null
+    role: candidate
+  - usgs_number: "06892350"
+    name: DeSoto
+    latitude: null
+    longitude: null
+    role: candidate
+  - usgs_number: "06892518"
+    name: Lake Quivira
+    latitude: null
+    longitude: null
+    role: candidate

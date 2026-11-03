@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rivwq"
+version = "0.0.0"
+description = "River water quality from Sentinel-2 and USGS data"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "scikit-learn",
+    "shap",
+    "optuna",
+    "earthengine-api",
+    "dataretrieval",
+    "geopandas",
+    "rasterio",
+    "matplotlib",
+    "pyyaml",
+    "pyarrow",
+    "joblib",
+    "pynhd",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = ["gee: needs a live Earth Engine session"]
+addopts = "-m 'not gee'"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests", "pipeline"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

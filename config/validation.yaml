@@ -1,0 +1,15 @@
+splits:
+  - random
+  - blocked_time
+  - scene_grouped
+  - leave_year_out
+  - out_of_time
+folds:
+  outer: null
+  inner: null
+seeds: null
+bootstrap:
+  method: block
+  resamples: null
+  block_length_days: null
+  confidence_level: null

@@ -1,0 +1,27 @@
+project_environment_variable: EARTHENGINE_PROJECT
+collections:
+  surface_reflectance: null
+  cloud_score: null
+bands: null
+scale_m: null
+crs: null
+tile_scale: null
+reducers:
+  - mean
+  - median
+  - stdDev
+  - count
+masks:
+  variants:
+    - cloud_score_plus
+    - scene_classification
+  cloud_score_threshold: null
+  water_index_threshold: null
+  edge_buffer_m: null
+  minimum_valid_pixel_fraction: null
+date_ranges:
+  - start: null
+    end: null
+chunking:
+  by: year
+  max_features_per_request: 5000

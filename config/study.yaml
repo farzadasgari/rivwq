@@ -1,0 +1,24 @@
+site:
+  primary_station: "06888990"
+  name: null
+dates:
+  start: null
+  end: null
+  out_of_time_start: "2025-01-01"
+targets:
+  - turbidity
+  - dissolved_oxygen
+  - chlorophyll_fluorescence
+matching:
+  variants:
+    - nearest
+    - window_30_min
+    - window_60_min
+    - daily_mean
+  primary_variant: null
+  tolerance_minutes:
+    nearest: null
+    window_30_min: 30
+    window_60_min: 60
+  minimum_valid_pixel_fraction: null
+random_seed: null

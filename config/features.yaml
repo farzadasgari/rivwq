@@ -1,0 +1,8 @@
+bands: {}
+wavelengths_nm: {}
+indices: {}
+groups:
+  optics: []
+  hydraulics: []
+  seasonality: []
+  deployable: []
