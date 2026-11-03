@@ -1,6 +1,6 @@
 PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+.PHONY: scout check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
 
 check: lint test nocomments
 
@@ -42,3 +42,6 @@ step-09:
 	$(PY) pipeline/09_figures_tables.py
 
 all: step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+
+scout:
+	$(PY) pipeline/scout_stations.py

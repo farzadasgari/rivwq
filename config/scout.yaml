@@ -1,0 +1,72 @@
+as_of_date: "2026-11-03"
+sentinel2_start: "2018-01-01"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+cache_dir: "data/interim/usgs_scout"
+output_prefix: "04b_station"
+request_pause_seconds: 0.5
+batch_size: 25
+retry_attempts: 5
+site_type: "ST"
+states: [AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY, PR]
+reference_sites: ["06888990", "06887500", "06892350", "06892518"]
+criteria:
+  min_overlap_years: 3.0
+  min_day_fraction: 0.5
+  min_last_date: "2025-07-01"
+  excluded_name_pattern: "TIDAL|CANAL|DITCH|CHANNEL TO"
+  tidal_parameter_pattern: "(?i)tide|tidal"
+variables:
+  turbidity:
+    required: true
+    name_pattern: "^Turbidity"
+    exclude_pattern: "middepth|storm|lab|SDV"
+    units: ["FNU"]
+  dissolved_oxygen:
+    required: true
+    name_pattern: "^Dissolved oxygen$"
+    units: ["mg/l"]
+  water_temperature:
+    required: true
+    name_pattern: "^Temperature, water$"
+    units: ["deg C"]
+  discharge:
+    required: true
+    name_pattern: "^Discharge(?:, instant\\.)?$"
+    units: ["ft3/s", "m3/sec"]
+  gage_height:
+    required: true
+    name_pattern: "^(?:Gage height|GageHeightAboveDatum|Stream stage)$"
+    units: ["ft", "m"]
+  chlorophyll_fluorescence:
+    required: false
+    name_pattern: "^(?:fChl|Relative fChl|Chlorophyll, in situ|Chlorophylls,in situ|Chlorophyll a, (?:in situ, )?IVF)"
+    exclude_pattern: "Percent|load"
+  phycocyanin:
+    required: false
+    name_pattern: "^(?:fPC|Relative fPC|Cyanobacteria, (?:SCUFA|IVF)|Cyanobac-PC)"
+    exclude_pattern: "load"
+strata:
+  turbid_median_fnu_min: 20.0
+  clear_median_fnu_max: 8.0
+  regulated_peak_share_min: 0.5
+  free_flowing_peak_share_max: 0.1
+  regulation_peak_codes: ["5", "6"]
+  snowmelt_min_altitude_ft: 3000.0
+  snowmelt_peak_months: [5, 6, 7]
+  northern_snowmelt_min_latitude: 43.0
+  northern_snowmelt_peak_months: [3, 4, 5]
+  cloudier_states: [WA, OR, MI, OH, PA, NY, VT, NH, ME, MA, CT, RI, NJ, WV, KY, IN, WI, MN, AK, TN, NC, SC, GA, AL, MS, LA, AR, FL, VA, MD, DE, DC, PR, HI, IL, MO, IA]
+  sunnier_states: [AZ, NM, NV, UT, CO, WY, TX, OK, KS, NE, SD, ND, MT, ID, CA]
+fallback_windows:
+  - ["2025-02-01", "2025-02-28"]
+  - ["2025-06-01", "2025-06-30"]
+  - ["2025-10-01", "2025-10-31"]
+coverage_window: ["2025-01-01", "2025-12-31"]
+shortlist:
+  size: 14
+  min_drainage_area_sqmi: 500.0
+  min_sampled_day_fraction: 0.8
+  min_separation_km: 100.0
+  fluorescence_bonus: 0.5
+  quality_weight: 0.5
+  max_overlap_years_for_quality: 8.0
