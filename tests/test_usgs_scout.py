@@ -146,6 +146,7 @@ def synthetic_candidates(count: int) -> pd.DataFrame:
                 "overlap_years": 5.0 + rng.random() * 3,
                 "min_required_catalog_day_fraction": 0.7 + rng.random() * 0.3,
                 "fluorescence_present": bool(index % 3 == 0),
+                "fchl_years": 2.0 if index % 3 == 0 else 0.0,
                 "drainage_area_sqmi": 1000.0 + index,
                 "sampled_day_fraction": 0.95,
                 "meets_criteria": True,
@@ -241,3 +242,20 @@ def test_sensor_suffixed_columns_are_used():
     assert scout.day_fraction_from_instantaneous(
         frame, "63680", "2025-01-01", "2025-01-04"
     ) == pytest.approx(0.5)
+
+
+def test_describe_pick_labels_turbidity_coverage_and_fchl_years(config):
+    candidates = synthetic_candidates(60)
+    shortlist = scout.select_shortlist(candidates, config["shortlist"])
+    with_fchl = shortlist[shortlist["fluorescence_present"]]
+    without_fchl = shortlist[~shortlist["fluorescence_present"]]
+    assert shortlist["reason"].str.contains("of 2025 days with turbidity data").all()
+    assert with_fchl["reason"].str.contains("fChl 2.0 y in 2018-2025").all()
+    assert without_fchl["reason"].str.endswith("no fChl").all()
+
+
+def test_extra_candidates_never_enter_shortlist(config):
+    candidates = synthetic_candidates(60)
+    candidates["is_extra"] = candidates.index.isin(["00000030", "00000031"])
+    shortlist = scout.select_shortlist(candidates, config["shortlist"])
+    assert not shortlist["is_extra"].any()

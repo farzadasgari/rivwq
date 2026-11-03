@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from rivwq.usgs.flags import add_all_flags
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CONFIG_PATH = REPO_ROOT / "config" / "scout.yaml"
 EARTH_RADIUS_KM = 6371.0
@@ -96,6 +98,7 @@ def apply_criteria(
     result["min_required_catalog_day_fraction"] = fractions.min(axis=1)
     result["fluorescence_present"] = result["chlorophyll_fluorescence_code"].notna()
     result["is_reference"] = result.index.isin(reference_sites)
+    result["is_extra"] = result.index.isin(config.get("extra_candidates", []))
     result["is_tidal"] = result.index.isin(tidal_sites)
 
     failures = pd.DataFrame(index=result.index)
@@ -258,6 +261,8 @@ def quality_score(row: pd.Series, settings: dict) -> float:
 
 def select_shortlist(candidates: pd.DataFrame, settings: dict) -> pd.DataFrame:
     eligible = candidates["meets_criteria"] & ~candidates["is_reference"]
+    if "is_extra" in candidates:
+        eligible &= ~candidates["is_extra"]
     eligible &= candidates["drainage_area_sqmi"] >= settings["min_drainage_area_sqmi"]
     eligible &= candidates["sampled_day_fraction"] >= settings["min_sampled_day_fraction"]
     for axis in STRATUM_AXES:
@@ -304,12 +309,15 @@ def select_shortlist(candidates: pd.DataFrame, settings: dict) -> pd.DataFrame:
 
 
 def describe_pick(row: pd.Series) -> str:
-    extras = " with fChl" if row["fluorescence_present"] else ""
+    if row["fluorescence_present"] and row["fchl_years"] > 0:
+        fchl = f"fChl {row['fchl_years']:.1f} y in 2018-2025"
+    else:
+        fchl = "no fChl"
     return (
         f"{row['turbidity_class']}, {row['regulation_class'].replace('_', ' ')}, "
         f"{row['regime_class'].replace('_', ' ')}, {row['cloud_class']} region; "
-        f"{row['overlap_years']:.1f} y overlap, {row['sampled_day_fraction']:.0%} of 2025 days"
-        f"{extras}"
+        f"{row['overlap_years']:.1f} y overlap, {row['sampled_day_fraction']:.0%} of 2025 days "
+        f"with turbidity data; {fchl}"
     )
 
 
@@ -325,6 +333,20 @@ def cached(path: Path, refresh: bool, build) -> pd.DataFrame:
     path.parent.mkdir(parents=True, exist_ok=True)
     frame.to_csv(path, index=False)
     return frame
+
+
+def cached_with_extras(
+    path: Path, refresh: bool, extra_sites: list[str], required: list[str], build_all, build_extras
+) -> pd.DataFrame:
+    frame = cached(path, refresh, build_all)
+    complete = frame.dropna(subset=required)
+    stale = [site for site in extra_sites if site not in set(complete["site_no"])]
+    if not stale:
+        return frame
+    kept = frame[~frame["site_no"].isin(stale)]
+    combined = pd.concat([kept, build_extras(stale)], ignore_index=True)
+    combined.to_csv(path, index=False)
+    return combined
 
 
 def fetch_parameter_table() -> pd.DataFrame:
@@ -534,7 +556,7 @@ def write_outputs(config: dict, candidates: pd.DataFrame, shortlist: pd.DataFram
     output_dir = Path(config["output_dir"]).expanduser()
     output_dir.mkdir(parents=True, exist_ok=True)
     prefix = config["output_prefix"]
-    keep = candidates["meets_criteria"] | candidates["is_reference"]
+    keep = candidates["meets_criteria"] | candidates["is_reference"] | candidates["is_extra"]
     paths = {
         output_dir / f"{prefix}_candidates.csv": candidates[keep],
         output_dir / f"{prefix}_screened_all.csv": candidates,
@@ -566,18 +588,31 @@ def main(argv: list[str] | None = None) -> None:
     )
     table = build_tables(config, parameters, catalog, details)
     print(funnel(table).to_string())
-    selected = table[table["meets_criteria"] | table["is_reference"]]
-    summaries = cached(
+    selected = table[table["meets_criteria"] | table["is_reference"] | table["is_extra"]]
+    extra_sites = [site for site in config["extra_candidates"] if site in set(selected.index)]
+    summaries = cached_with_extras(
         cache / "site_summaries.csv",
         args.refresh,
+        extra_sites,
+        ["turbidity_median_fnu", "discharge_peak_month"],
         lambda: fetch_site_summaries(selected, config, cache / "site_summaries_partial.csv"),
+        lambda sites: fetch_site_summaries(
+            selected.loc[sites], config, cache / "extra_summaries_partial.csv"
+        ),
     ).set_index("site_no")
-    coverage = cached(
+    coverage = cached_with_extras(
         cache / "site_coverage.csv",
         args.refresh,
+        extra_sites,
+        ["sampled_day_fraction"],
         lambda: fetch_coverage(selected, config, cache / "site_coverage_partial.csv"),
+        lambda sites: fetch_coverage(
+            selected.loc[sites], config, cache / "extra_coverage_partial.csv"
+        ),
     ).set_index("site_no")
-    candidates = add_strata(table, summaries.join(coverage), config["strata"])
+    candidates = add_all_flags(
+        add_strata(table, summaries.join(coverage), config["strata"]), config
+    )
     shortlist = select_shortlist(candidates, config["shortlist"])
     for path in write_outputs(config, candidates, shortlist):
         print(path)

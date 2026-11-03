@@ -9,6 +9,15 @@ retry_attempts: 5
 site_type: "ST"
 states: [AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY, PR]
 reference_sites: ["06888990", "06887500", "06892350", "06892518"]
+extra_candidates: ["11273400", "07182510", "06329500"]
+caveat_sites:
+  "040851385": "lake or seiche influence (Green Bay)"
+  "05537980": "canal"
+  "01463500": "head of tide"
+  "07374000": "tidal"
+fchl_window: ["2018-01-01", "2026-01-01"]
+fchl_out_of_time_start: "2025-01-01"
+fchl_min_years_before_out_of_time: 1.0
 criteria:
   min_overlap_years: 3.0
   min_day_fraction: 0.5
