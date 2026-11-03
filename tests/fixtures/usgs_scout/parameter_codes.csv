@@ -1,0 +1,147 @@
+parameter_code,parameter_name,unit_of_measure,parameter_group_code
+00010,"Temperature, water",deg C,PHY
+00011,"Temperature, water",deg F,PHY
+00060,Discharge,ft3/s,PHY
+00061,"Discharge, instant.",ft3/s,PHY
+00065,Gage height,ft,PHY
+00067,Tide stage,code,PHY
+00070,Turbidity,JTU,PHY
+00072,Stream stage,m,PHY
+00075,"Turbidity, Hellige",mg/l SiO2,PHY
+00076,Turbidity,NTU,PHY
+00300,Dissolved oxygen,mg/l,INN
+01350,"Turbidity, severity",code,PHY
+30208,Discharge,m3/sec,PHY
+30209,Instantaneous Discharge,m3/sec,PHY
+31883,"fChl grn/brn, water, in situ",ug/l,PHY
+31884,"fChl, PC algae, water, insitu",ug/l,PHY
+31885,"fChl, PE algae, water, insitu",ug/l,PHY
+31886,"Percent fChl, grn/brn, insitu",%,PHY
+31887,"Percent fChl, PC algae,insitu",%,PHY
+31888,"Percent fChl, PE algae,insitu",%,PHY
+32207,"Chlorophyll a, peri, nbfm",mg/m2,BIO
+32208,"Chlorophyll a, phyto nbfm",ug/l,BIO
+32209,"Chlorophyll a, fm,c",ug/l,BIO
+32210,"Chlorophyll a, tri,u",ug/l,BIO
+32211,"Chlorophyll a, phyto,spec",ug/l,BIO
+32217,"Chlorophyll a,fm,unc",ug/l,BIO
+32223,"Chlorophyll a, peri,spec,cor",mg/m2,BIO
+32226,"Chlorophyll b, peri,spec,unc",mg/m2,BIO
+32228,"Chlorophyll a, peri,spec,unc",mg/m2,BIO
+32230,"Chlorophyll a, phy,spec,unc",ug/l,BIO
+32231,"Chlorophyll b, phyto,spec",ug/l,BIO
+32232,"Chlorophyll c, phyto,spec",ug/l,BIO
+32234,"Chlorophylls,phy,unc",ug/l,BIO
+32241,"Chlorophyll a,peri,fluoro,unc",mg/m2,BIO
+32242,"Chlorophyll a, peri,fluoro,c",mg/m2,BIO
+32265,"Turbidity, wu, vert. light",FNU,PHY
+32266,"Chlorophyll a, blue-green al",ug/l,BIO
+32267,"Phycocyanin, unbound",ug/l,BIO
+32269,"Chlorophyll a, plankton",mg/m3,BIO
+32271,"Chlorophylls &lt;35u, phyto,f",ug/l,BIO
+32272,"Chlorophyll a &lt;35u, phyto,f,c",ug/l,BIO
+32274,"Chlorophylls &lt;11u, phyto,f",ug/l,BIO
+32275,"Chlorophyll a &lt;11u, phyto,f,c",ug/l,BIO
+32277,"Chlorophylls &gt;35u, calcd",ug/l,BIO
+32278,"Chlorophyll a &gt;35u, calcd",ug/l,BIO
+32280,"Chlorophylls &gt;11u, calcd",ug/l,BIO
+32281,"Chlorophyll a &gt;11u, calcd",ug/l,BIO
+32283,"fChl,in situ,650-700",RFU,BIO
+32284,"Chlorophyll a, total",ug/l,BIO
+32315,"Relative fChl, water, in situ",RFU,PHY
+32316,"fChl, water, in situ",ug/l,PHY
+32317,"Chlorophyll a, regress",ug/l,BIO
+32318,"Chlorophylls,in situ",ug/l,BIO
+32319,"fPC, water, in situ",ug/l,PHY
+32320,"fChl,in situ,470/685",RFU,BIO
+32321,"Relative fPC, water, in situ",RFU,PHY
+32329,"Phycocyanin, regress",ug/l,BIO
+32735,"Chlorophyll a, phyto, spectro",mg/l,BIO
+50042,Discharge,gal/min,PHY
+50104,"Chlorophyll a, peri, sm",mg/m2,BIO
+50107,"Chlorophyll a, sm",ug/l,BIO
+50108,"Chlorophyll b, peri, sm",mg/m2,BIO
+50109,"Chlorophyll b, sm",ug/l,BIO
+50110,"Chlorophyll c, peri, sm",mg/m2,BIO
+50111,"Chlorophyll c, sm",ug/l,BIO
+50222,"Phycocyanin, peri, fm",mg/m2,BIO
+50223,"Phycocyanin, fm",ug/l,BIO
+50800,"Chlorophyll c3, phyto, cf",ug/l,BIO
+50801,"Chlorophyll c1+c2, phyto, cf",ug/l,BIO
+50806,"Chlorophyllide a, phyto, cf",ug/l,BIO
+50809,"Chlorophyll c, phyto, cf meth",ug/l,BIO
+52905,"Phycocyanins, wf",ug/l,BIO
+54181,"Chlorophyll a, sed, phyto",ug/l,BIO
+54183,"Chlorophyll a, sed, peri",mg/m2,BIO
+54184,"Chlorophyll a, sed, peri, RTH",mg/m2,BIO
+61028,"Turbidity, wu,field",NTU,PHY
+62361,"Chlorophyll, in situ",ug/l,BIO
+62618,Lake/reservoir stage,m,PHY
+62623,Tide stage,ft,PHY
+62624,Tide stage,m,PHY
+62856,"Discharge, storm event peak",ft3/s,PHY
+62971,"Dissolved oxygen, lab",mg/l,INN
+63675,"Turbidity, Nephelom",NTU,PHY
+63676,"Turbidity, NephRatio",NTRU,PHY
+63679,"Turbidity, NephMulti",NTMU,PHY
+63680,"Turbidity, Form Neph",FNU,PHY
+63681,"Turbidity, FormRatio",FNRU,PHY
+63682,"Turbidity,FormBksctr",FBU,PHY
+63683,"Turbidity,FormAttenu",FAU,PHY
+63684,"Turbidity, FormMulti",FNMU,PHY
+63763,"Chlorophyll a, peri, DTH, cf",mg/m2,BIO
+65228,"Chlorophyll b, tri,uncorr",ug/l,BIO
+65229,"Chlorophyll c, tri,uncorr",ug/l,BIO
+65230,"Chlorophyll a, in situ, IVF",IVFU,BIO
+65231,"Chlorophyll a, IVF",ug/l,BIO
+70951,"Chlorophyll a, phyto, cs meth",ug/l,BIO
+70952,"Chlorophyll b, phyto, cs meth",ug/l,BIO
+70954,"Chlorophyll b, phyto, cf meth",ug/l,BIO
+70955,"Chlorophyll a, peri, cs meth",mg/m2,BIO
+70956,"Chlorophyll b, peri, cs meth",mg/m2,BIO
+70957,"Chlorophyll a, peri, cf meth",mg/m2,BIO
+70958,"Chlorophyll b, peri, cf meth",mg/m2,BIO
+72122,"Discharge, storm event median",ft3/s,PHY
+72123,"Discharge, storm event mean",ft3/s,PHY
+72137,"Discharge,tide fltrd",ft3/s,PHY
+72138,"Discharge,tide fltrd",m3/sec,PHY
+72139,"Discharge,tide fltrd",gal/min,PHY
+72168,"Velocity, tide fltrd",ft/sec,PHY
+72169,"Velocity, tide fltrd",m/s,PHY
+72170,"Stage, tide f, datum",ft,PHY
+72171,"Stage, tide f, datum",meters,PHY
+72177,"Discharge, GW",cm/d,PHY
+72188,"Turbidity, wu,field,NephRatio",NTRU,PHY
+72208,"Turbidity,middepth,broad band",NTU,PHY
+72209,"Turbidity,middepth,monochrome",FNU,PHY
+72210,"Dissolved oxygen, mid-depth",% saturatn,INN
+72213,"Turbidity, 90&0-45 d",FBRU,PHY
+72243,Discharge,ft3/day,PHY
+72272,"Discharge, cumul",ac-ft,PHY
+72337,"Turbidity, wu, SDVBBksctr",SBU,PHY
+72369,"Tide stage, NAVD88",ft,PHY
+72370,"Tide stage, NAVD88",m,PHY
+72371,"Tide stage, PRVD02",ft,PHY
+72372,"Tide stage, PRVD02",m,PHY
+72373,"Tide stage, VIVD09",ft,PHY
+72374,"Tide stage, VIVD09",m,PHY
+72395,"Turbidity, storm event mean",FNU,PHY
+72433,"Discharge, cumulative",dam3,PHY
+72434,"Discharge, cumulative",ft3,PHY
+72477,Lake/reservoir stage,ft,PHY
+81380,Discharge velocity,m/sec,PHY
+81381,Discharge duration,minutes,PHY
+82079,"Turbidity, wu, lab",NTU,PHY
+83562,"fChl load, water, in situ",ug/s,BIO
+85573,"Dissolved oxygen, w, diss",cm3/g @STP,INN
+92209,"Chlorophyll a, corr, area ave",ug/l,BIO
+95201,"Cyanobact, Hydrolab",#/ml,BIO
+95202,"Cyanobac-PC, water, in situ",#/ml,PHY
+95203,"Cyanobacteria, SCUFA",ug/l,BIO
+95204,"Cyanobacteria, IVF",IVFU,BIO
+99060,Discharge,m3/sec,PHY
+99061,"Discharge, instantaneous",m3/sec,PHY
+99065,Gage height,m,PHY
+99421,"Chlorophyll a load, water",lb/day,BIO
+99872,"Turbidity, wu, Hach2100, lab",NTU,PHY
+99985,"Dissolved oxygen, mid-depth",mg/l,INN
