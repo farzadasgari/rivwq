@@ -1,0 +1,41 @@
+input_dir: "~/Work/rivwq_CC/02_data_audit"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+output_prefix: "04c_width_cloud"
+cache_dir: "data/interim/width_cloud"
+shortlist_file: "04b_station_shortlist.csv"
+candidates_file: "04b_station_candidates.csv"
+screened_file: "04b_station_screened_all.csv"
+datasets:
+  surface_reflectance: "COPERNICUS/S2_SR_HARMONIZED"
+  cloud_score: "GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED"
+  surface_water: "JRC/GSW1_4/GlobalSurfaceWater"
+bands:
+  scene_classification: "SCL"
+  cloud_score: "cs_cdf"
+  occurrence: "occurrence"
+  coverage: "B2"
+width:
+  circle_radius_m: 2000.0
+  occurrence_thresholds: [25, 50, 75]
+  primary_occurrence_threshold: 50
+  gauge_near_water_distance_m: 100.0
+  lake_like_min_water_share: 0.40
+  scale_m: 30.0
+  pixel_size_m: 10.0
+  min_pixels_across: 5.0
+cloud:
+  start: "2018-01-01"
+  end_exclusive: "2026-01-01"
+  roi_buffer_m: 1000.0
+  scale_m: 10.0
+  cloud_score_min: 0.60
+  scl_valid_classes: [4, 5, 6]
+  min_valid_roi_fraction: 0.80
+  tile_scale: 2
+  workers: 4
+  retry_attempts: 4
+  retry_pause_seconds: 5
+extra_candidates:
+  - "11273400"
+  - "07182510"
+  - "06329500"
