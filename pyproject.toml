@@ -24,6 +24,7 @@ dependencies = [
     "pyarrow",
     "joblib",
     "pynhd",
+    "python-dotenv>=1.2.4",
 ]
 
 [project.optional-dependencies]
