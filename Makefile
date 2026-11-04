@@ -1,6 +1,6 @@
 PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: scout width-cloud check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+.PHONY: scout width-cloud gate-c check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
 
 check: lint test nocomments
 
@@ -48,3 +48,6 @@ scout:
 
 width-cloud:
 	$(PY) pipeline/width_cloud.py
+
+gate-c:
+	$(PY) pipeline/gate_c.py
