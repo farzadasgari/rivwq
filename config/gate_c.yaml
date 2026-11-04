@@ -1,0 +1,47 @@
+input_dir: "~/Work/rivwq_CC/02_data_audit"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+output_prefix: "04d_gate_c_table"
+manifest_name: "04d_width_cloud_manifest.json"
+cache_dir: "data/interim/gate_c"
+done_table_file: "04c_width_cloud.csv"
+candidates_file: "04b_station_candidates.csv"
+screened_file: "04b_station_screened_all.csv"
+pool:
+  min_drainage_area_sqmi: 1000.0
+  relaxed_missing_series: "dissolved_oxygen"
+width_batch_size: 25
+coverage:
+  start: "2018-01-01"
+  end: "2025-12-31"
+  turbidity_code: "63680"
+  dissolved_oxygen_code: "00300"
+  discharge_code: "00060"
+  gage_code: "00065"
+  workers: 4
+  request_pause_seconds: 0.2
+  retry_attempts: 5
+  retry_pause_seconds: 5
+  max_failed_share: 0.5
+  tail_margin_days: 31
+  fallback_window_days: 7
+  fallback_window_starts: ["02-01", "05-01", "08-01", "11-01"]
+  turbidity_high_fnu: 200.0
+  gap_months_limit: 6
+  days_per_month: 30.4375
+rules:
+  min_pixels_across: 10.0
+  min_turbidity_coverage_2025: 0.8
+  min_overlap_years: 3.0
+  overlap_train_first_year: 2018
+  overlap_train_last_year: 2024
+  overlap_test_year: 2025
+  min_train_year_coverage: 0.5
+  min_test_coverage: 0.8
+  min_fchl_years: 3.0
+  high_turbidity_share: 0.10
+  top_sites: 20
+regions:
+  Northeast: [CT, ME, MA, NH, RI, VT, NJ, NY, PA]
+  Midwest: [IL, IN, MI, OH, WI, IA, KS, MN, MO, NE, ND, SD]
+  South: [DE, DC, FL, GA, MD, NC, SC, VA, WV, AL, KY, MS, TN, AR, LA, OK, TX, PR]
+  West: [AZ, CO, ID, MT, NV, NM, UT, WY, AK, CA, HI, OR, WA]
