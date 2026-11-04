@@ -103,16 +103,31 @@ def width_feature_factory(config: dict):
     return compute
 
 
-def fetch_raw_width(config: dict, sites: pd.DataFrame, cache: Path) -> pd.DataFrame:
+def fetch_raw_width(
+    config: dict, sites: pd.DataFrame, cache: Path, batch_size: int | None = None
+) -> pd.DataFrame:
     path = cache / RAW_WIDTH_FILE
-    if path.exists():
-        return pd.read_csv(path, dtype=TEXT).set_index("site_no")
-    collection = gauge_points(sites).map(width_feature_factory(config))
-    properties = collection.getInfo()["features"]
-    raw = pd.DataFrame([item["properties"] for item in properties]).set_index("site_no")
-    cache.mkdir(parents=True, exist_ok=True)
-    raw.to_csv(path)
-    return raw
+    cached = pd.read_csv(path, dtype=TEXT).set_index("site_no") if path.exists() else None
+    missing = sites if cached is None else sites.loc[~sites.index.isin(cached.index)]
+    if len(missing):
+        step = batch_size or len(missing)
+        frames = [] if cached is None else [cached]
+        compute = width_feature_factory(config)
+        for begin in range(0, len(missing), step):
+            batch = missing.iloc[begin : begin + step]
+            collection = gauge_points(batch).map(compute)
+            features = with_retries(
+                lambda collection=collection: collection.getInfo()["features"],
+                config["cloud"]["retry_attempts"],
+                config["cloud"]["retry_pause_seconds"],
+            )
+            frames.append(
+                pd.DataFrame([item["properties"] for item in features]).set_index("site_no")
+            )
+        cached = pd.concat(frames)
+        cache.mkdir(parents=True, exist_ok=True)
+        cached.to_csv(path)
+    return cached.loc[sites.index]
 
 
 def per_date_collection(config: dict, longitude: float, latitude: float, year: int):
