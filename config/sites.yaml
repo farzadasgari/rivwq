@@ -1,21 +1,821 @@
-stations:
-  - usgs_number: "06888990"
-    name: null
-    latitude: null
-    longitude: null
-    role: primary
-  - usgs_number: "06887500"
-    name: Wamego
-    latitude: null
-    longitude: null
-    role: candidate
-  - usgs_number: "06892350"
-    name: DeSoto
-    latitude: null
-    longitude: null
-    role: candidate
-  - usgs_number: "06892518"
-    name: Lake Quivira
-    latitude: null
-    longitude: null
-    role: candidate
+source_table: 04d_gate_c_table.csv
+source_table_sha256: ea76c5822e809a879316123448fdbf0b4cf11b2f5be0d7c6f993dbf00ff3d514
+counts:
+  core: 18
+  extended_caveat: 2
+  extended_estimated: 4
+scene_totals:
+  core:
+    est_scenes_upper: 8365.0
+    est_scenes_matched: 6785.586683134965
+  extended_caveat:
+    est_scenes_upper: 1047.0
+    est_scenes_matched: 985.3752947451158
+  extended_estimated:
+    est_scenes_upper: 1683.0
+    est_scenes_matched: 1369.8979104509533
+cv_groups:
+  broad:
+    members:
+    - '02162035'
+    sites_per_layer:
+      core: 1
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 593.0
+    est_scenes_matched: 562.142604236844
+    core_est_scenes_matched: 562.142604236844
+    core_scene_share: 0.08284362583326872
+    exceeds_core_scene_share_limit: false
+  colorado:
+    members:
+    - '09180500'
+    sites_per_layer:
+      core: 1
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 435.0
+    est_scenes_matched: 192.78479395912868
+    core_est_scenes_matched: 192.78479395912868
+    core_scene_share: 0.028410924944526895
+    exceeds_core_scene_share_limit: false
+  connecticut:
+    members:
+    - '01184000'
+    sites_per_layer:
+      core: 0
+      extended_caveat: 0
+      extended_estimated: 1
+    est_scenes_upper: 261.0
+    est_scenes_matched: 200.41071428571428
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
+    exceeds_core_scene_share_limit: false
+  delaware+schuylkill:
+    members:
+    - '01438500'
+    - '01473500'
+    - '01463500'
+    sites_per_layer:
+      core: 2
+      extended_caveat: 1
+      extended_estimated: 0
+    est_scenes_upper: 1040.0
+    est_scenes_matched: 897.6001543902987
+    core_est_scenes_matched: 372.2954908675799
+    core_scene_share: 0.05486563037988899
+    exceeds_core_scene_share_limit: false
+  fox:
+    members:
+    - '040851385'
+    sites_per_layer:
+      core: 0
+      extended_caveat: 1
+      extended_estimated: 0
+    est_scenes_upper: 505.0
+    est_scenes_matched: 460.0706312223969
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
+    exceeds_core_scene_share_limit: false
+  james:
+    members:
+    - '02035000'
+    sites_per_layer:
+      core: 1
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 574.0
+    est_scenes_matched: 500.49263792200014
+    core_est_scenes_matched: 500.49263792200014
+    core_scene_share: 0.07375819679172838
+    exceeds_core_scene_share_limit: false
+  kansas:
+    members:
+    - '06887000'
+    - '06887500'
+    - '06888990'
+    - '06892350'
+    - '06892518'
+    sites_per_layer:
+      core: 5
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 2255.0
+    est_scenes_matched: 1912.945062317539
+    core_est_scenes_matched: 1912.945062317539
+    core_scene_share: 0.28191299465262326
+    exceeds_core_scene_share_limit: true
+  klamath:
+    members:
+    - '11530500'
+    sites_per_layer:
+      core: 0
+      extended_caveat: 0
+      extended_estimated: 1
+    est_scenes_upper: 638.9999999999999
+    est_scenes_matched: 484.95535714285705
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
+    exceeds_core_scene_share_limit: false
+  missouri:
+    members:
+    - '06818000'
+    sites_per_layer:
+      core: 1
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 632.0000000000001
+    est_scenes_matched: 604.7370461860919
+    core_est_scenes_matched: 604.7370461860919
+    core_scene_share: 0.08912081952900515
+    exceeds_core_scene_share_limit: false
+  ohio:
+    members:
+    - '03216070'
+    - '03612600'
+    sites_per_layer:
+      core: 2
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 771.0
+    est_scenes_matched: 619.788775357437
+    core_est_scenes_matched: 619.788775357437
+    core_scene_share: 0.09133901080327698
+    exceeds_core_scene_share_limit: false
+  potomac:
+    members:
+    - '01638500'
+    - '01646500'
+    sites_per_layer:
+      core: 2
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 1048.0
+    est_scenes_matched: 688.2735936447339
+    core_est_scenes_matched: 688.2735936447339
+    core_scene_share: 0.1014317001292435
+    exceeds_core_scene_share_limit: false
+  saginaw:
+    members:
+    - '04157005'
+    sites_per_layer:
+      core: 1
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 446.99999999999994
+    est_scenes_matched: 382.2955872445542
+    core_est_scenes_matched: 382.2955872445542
+    core_scene_share: 0.056339356506154355
+    exceeds_core_scene_share_limit: false
+  taku:
+    members:
+    - '15041200'
+    sites_per_layer:
+      core: 0
+      extended_caveat: 0
+      extended_estimated: 1
+    est_scenes_upper: 284.0
+    est_scenes_matched: 221.875
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
+    exceeds_core_scene_share_limit: false
+  w_fk_san_jacinto:
+    members:
+    - '08069500'
+    sites_per_layer:
+      core: 0
+      extended_caveat: 0
+      extended_estimated: 1
+    est_scenes_upper: 499.0
+    est_scenes_matched: 462.6568390223819
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
+    exceeds_core_scene_share_limit: false
+  wabash+white:
+    members:
+    - '03374100'
+    - '03378500'
+    sites_per_layer:
+      core: 2
+      extended_caveat: 0
+      extended_estimated: 0
+    est_scenes_upper: 1112.0
+    est_scenes_matched: 949.8310913990567
+    core_est_scenes_matched: 949.8310913990567
+    core_scene_share: 0.13997774043028383
+    exceeds_core_scene_share_limit: false
+grouping_conflicts:
+  same_river_different_basin:
+  - - '03216070'
+    - '03612600'
+  same_basin_different_river:
+  - - '01438500'
+    - '01473500'
+  - - '01473500'
+    - '01463500'
+  - - '03374100'
+    - '03378500'
+layers:
+  core:
+  - site_no: '01438500'
+    station: Delaware River at Montague NJ
+    state: PA
+    region: Northeast
+    river_group: delaware
+    basin_group: '0204'
+    cv_group: delaware+schuylkill
+    role: pool
+    drainage_area_sqmi: 3480.0
+    pixels_across: 13.380484411076566
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 234.99999999999997
+    est_scenes_matched: 171.6681684632083
+  - site_no: '01473500'
+    station: Schuylkill River at Norristown, PA
+    state: PA
+    region: Northeast
+    river_group: schuylkill
+    basin_group: '0204'
+    cv_group: delaware+schuylkill
+    role: pool
+    drainage_area_sqmi: 1760.0
+    pixels_across: 12.548352358099248
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: free_flowing
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 263.0
+    est_scenes_matched: 200.62732240437157
+  - site_no: '01638500'
+    station: POTOMAC RIVER AT POINT OF ROCKS, MD
+    state: MD
+    region: South
+    river_group: potomac
+    basin_group: '0207'
+    cv_group: potomac
+    role: pool
+    drainage_area_sqmi: 9651.0
+    pixels_across: 18.044632175699867
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: free_flowing
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 509.0
+    est_scenes_matched: 274.5757616588068
+  - site_no: '01646500'
+    station: POTOMAC RIVER NEAR WASH, DC LITTLE FALLS PUMP STA
+    state: MD
+    region: South
+    river_group: potomac
+    basin_group: '0207'
+    cv_group: potomac
+    role: pool
+    drainage_area_sqmi: 11560.0
+    pixels_across: 26.99383959686279
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: free_flowing
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 539.0
+    est_scenes_matched: 413.6978319859271
+  - site_no: '02035000'
+    station: JAMES RIVER AT CARTERSVILLE, VA
+    state: VA
+    region: South
+    river_group: james
+    basin_group: 0208
+    cv_group: james
+    role: pool
+    drainage_area_sqmi: 6252.0
+    pixels_across: 13.0215578663725
+    targets:
+      turbidity: true
+      dissolved_oxygen: false
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: unknown
+      regulation_class: free_flowing
+      regime_class: unknown
+      cloud_class: cloudier
+    est_scenes_upper: 574.0
+    est_scenes_matched: 500.49263792200014
+  - site_no: '02162035'
+    station: BROAD RIVER NEAR COLUMBIA, SC
+    state: SC
+    region: South
+    river_group: broad
+    basin_group: '0305'
+    cv_group: broad
+    role: pool
+    drainage_area_sqmi: 5230.0
+    pixels_across: 18.173028030114267
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 593.0
+    est_scenes_matched: 562.142604236844
+  - site_no: '03216070'
+    station: OHIO RIVER AT IRONTON, OH
+    state: OH
+    region: Midwest
+    river_group: ohio
+    basin_group: 0509
+    cv_group: ohio
+    role: shortlist
+    drainage_area_sqmi: 60825.0
+    pixels_across: 40.722510063506476
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: '32316'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 485.0
+    est_scenes_matched: 467.0852421588442
+  - site_no: '03374100'
+    station: WHITE RIVER AT HAZLETON, IN
+    state: IN
+    region: Midwest
+    river_group: white
+    basin_group: '0512'
+    cv_group: wabash+white
+    role: pool
+    drainage_area_sqmi: 11305.0
+    pixels_across: 12.78338832480038
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 548.0
+    est_scenes_matched: 514.8114192679093
+  - site_no: '03378500'
+    station: WABASH RIVER AT NEW HARMONY, IN
+    state: IN
+    region: Midwest
+    river_group: wabash
+    basin_group: '0512'
+    cv_group: wabash+white
+    role: shortlist
+    drainage_area_sqmi: 29234.0
+    pixels_across: 27.040204092179845
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: '32315'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 564.0
+    est_scenes_matched: 435.0196721311475
+  - site_no: '03612600'
+    station: OHIO RIVER AT OLMSTED, IL
+    state: IL
+    region: Midwest
+    river_group: ohio
+    basin_group: '0514'
+    cv_group: ohio
+    role: pool
+    drainage_area_sqmi: 203000.0
+    pixels_across: 92.95500611832567
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 286.0
+    est_scenes_matched: 152.70353319859274
+  - site_no: '04157005'
+    station: SAGINAW RIVER AT HOLLAND AVENUE AT SAGINAW, MI
+    state: MI
+    region: Midwest
+    river_group: saginaw
+    basin_group: 0408
+    cv_group: saginaw
+    role: shortlist
+    drainage_area_sqmi: 6060.0
+    pixels_across: 13.508379798105278
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: '32315'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: free_flowing
+      regime_class: snowmelt
+      cloud_class: cloudier
+    est_scenes_upper: 446.99999999999994
+    est_scenes_matched: 382.2955872445542
+  - site_no: '06818000'
+    station: Missouri River at St. Joseph, MO
+    state: MO
+    region: Midwest
+    river_group: missouri
+    basin_group: '1024'
+    cv_group: missouri
+    role: pool
+    drainage_area_sqmi: 426500.0
+    pixels_across: 20.608422925941618
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 632.0000000000001
+    est_scenes_matched: 604.7370461860919
+  - site_no: '06887000'
+    station: BIG BLUE R NR MANHATTAN, KS
+    state: KS
+    region: Midwest
+    river_group: kansas
+    basin_group: '1027'
+    cv_group: kansas
+    role: pool
+    drainage_area_sqmi: 9640.0
+    pixels_across: 20.330374522746958
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 342.0
+    est_scenes_matched: 201.25012912643166
+  - site_no: '06887500'
+    station: KANSAS R AT WAMEGO, KS
+    state: KS
+    region: Midwest
+    river_group: kansas
+    basin_group: '1027'
+    cv_group: kansas
+    role: reference
+    drainage_area_sqmi: 55280.0
+    pixels_across: 13.870484754572848
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: true
+    fchl_code: '32320'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 345.0
+    est_scenes_matched: 314.76956546148665
+  - site_no: '06888990'
+    station: KANSAS R AB TOPEKA WEIR AT TOPEKA, KS
+    state: KS
+    region: Midwest
+    river_group: kansas
+    basin_group: '1027'
+    cv_group: kansas
+    role: reference
+    drainage_area_sqmi: 56686.0
+    pixels_across: 14.525259912043552
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: true
+    fchl_code: '32320'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 338.0
+    est_scenes_matched: 270.5394733887267
+  - site_no: '06892350'
+    station: KANSAS R AT DESOTO, KS
+    state: KS
+    region: Midwest
+    river_group: kansas
+    basin_group: '1027'
+    cv_group: kansas
+    role: reference
+    drainage_area_sqmi: 59756.0
+    pixels_across: 16.31906893397911
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: true
+    fchl_code: '32320'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 617.0
+    est_scenes_matched: 559.9774964443446
+  - site_no: '06892518'
+    station: KANSAS R NR LAKE QUIVIRA, KS
+    state: KS
+    region: Midwest
+    river_group: kansas
+    basin_group: '1027'
+    cv_group: kansas
+    role: reference
+    drainage_area_sqmi: 59985.0
+    pixels_across: 27.552728862113213
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: true
+    fchl_code: '32320'
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 613.0
+    est_scenes_matched: 566.4083978965491
+  - site_no: '09180500'
+    station: COLORADO RIVER NEAR CISCO, UT
+    state: UT
+    region: West
+    river_group: colorado
+    basin_group: '1403'
+    cv_group: colorado
+    role: pool
+    drainage_area_sqmi: 24100.0
+    pixels_across: 10.459171558568617
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: turbid
+      regulation_class: regulated
+      regime_class: snowmelt
+      cloud_class: sunnier
+    est_scenes_upper: 435.0
+    est_scenes_matched: 192.78479395912868
+  extended_caveat:
+  - site_no: '01463500'
+    station: Delaware River at Trenton NJ
+    state: NJ
+    region: Northeast
+    river_group: delaware
+    basin_group: '0204'
+    cv_group: delaware+schuylkill
+    role: shortlist
+    drainage_area_sqmi: 6780.0
+    pixels_across: 27.525876260220407
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: true
+    fchl_code: '32318'
+    caveat: true
+    caveat_reason: head of tide
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 542.0
+    est_scenes_matched: 525.3046635227188
+  - site_no: '040851385'
+    station: FOX RIVER AT OIL TANK DEPOT AT GREEN BAY, WI
+    state: WI
+    region: Midwest
+    river_group: fox
+    basin_group: '0403'
+    cv_group: fox
+    role: shortlist
+    drainage_area_sqmi: 6330.0
+    pixels_across: 41.491869182212675
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: '32315'
+    caveat: true
+    caveat_reason: lake or seiche influence (Green Bay)
+    coverage_estimated: false
+    strata:
+      turbidity_class: intermediate
+      regulation_class: free_flowing
+      regime_class: snowmelt
+      cloud_class: cloudier
+    est_scenes_upper: 505.0
+    est_scenes_matched: 460.0706312223969
+  extended_estimated:
+  - site_no: '01184000'
+    station: CONNECTICUT RIVER AT THOMPSONVILLE, CT
+    state: CT
+    region: Northeast
+    river_group: connecticut
+    basin_group: 0108
+    cv_group: connecticut
+    role: pool
+    drainage_area_sqmi: 9660.0
+    pixels_across: 26.388455108690454
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: true
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 261.0
+    est_scenes_matched: 200.41071428571428
+  - site_no: '08069500'
+    station: W Fk San Jacinto Rv nr Humble, TX
+    state: TX
+    region: South
+    river_group: w_fk_san_jacinto
+    basin_group: '1204'
+    cv_group: w_fk_san_jacinto
+    role: shortlist
+    drainage_area_sqmi: 1741.0
+    pixels_across: 16.445201712975596
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: true
+    strata:
+      turbidity_class: turbid
+      regulation_class: mixed
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 499.0
+    est_scenes_matched: 462.6568390223819
+  - site_no: '11530500'
+    station: KLAMATH R NR KLAMATH CA
+    state: CA
+    region: West
+    river_group: klamath
+    basin_group: '1801'
+    cv_group: klamath
+    role: pool
+    drainage_area_sqmi: 12100.0
+    pixels_across: 17.695984171214384
+    targets:
+      turbidity: true
+      dissolved_oxygen: false
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: true
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 638.9999999999999
+    est_scenes_matched: 484.95535714285705
+  - site_no: '15041200'
+    station: TAKU R NR JUNEAU AK
+    state: AK
+    region: West
+    river_group: taku
+    basin_group: '1901'
+    cv_group: taku
+    role: pool
+    drainage_area_sqmi: 6500.0
+    pixels_across: 26.012117995037
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: true
+    strata:
+      turbidity_class: unknown
+      regulation_class: free_flowing
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 284.0
+    est_scenes_matched: 221.875
