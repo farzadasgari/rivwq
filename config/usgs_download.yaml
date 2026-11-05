@@ -1,0 +1,38 @@
+sites_file: "config/sites.yaml"
+raw_root: "data/raw/usgs"
+start_date: "2018-01-01"
+endpoint: "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items"
+catalog_endpoint: "https://api.waterdata.usgs.gov/ogcapi/v1/collections/time-series-metadata/items"
+catalog_computation: "Instantaneous"
+statistic_id: "00011"
+response_properties:
+  - time_series_id
+  - monitoring_location_id
+  - parameter_code
+  - statistic_id
+  - time
+  - value
+  - unit_of_measure
+  - approval_status
+  - qualifier
+  - method_category
+  - last_modified
+fixed_parameters:
+  "63680": turbidity
+  "00300": dissolved_oxygen
+  "00010": water_temperature
+  "00060": discharge
+  "00065": gage_height
+  "00095": specific_conductance
+  "00400": ph
+  "00301": dissolved_oxygen_saturation
+fluorescence_name_pattern: "(?i)fchl|fpc|chlorophyll|cyanobac|phycocyanin"
+source_column: "waterdata.continuous:value"
+page_limit: 50000
+nominal_interval_seconds: 900
+workers: 1
+min_request_interval_seconds: 1.0
+retry_attempts: 6
+retry_base_seconds: 5.0
+quota_wait_seconds: 600.0
+quota_attempts: 12
