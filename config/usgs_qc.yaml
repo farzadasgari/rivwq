@@ -1,0 +1,9 @@
+raw_root: "data/raw/usgs"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+output_prefix: "04g_qc"
+gap_days: 7.0
+flatline_hours: 24.0
+flatline_break_intervals: 4.0
+ceiling_near_fraction: 0.95
+sensor_ceilings:
+  "63680": 3900.0
