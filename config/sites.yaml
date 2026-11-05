@@ -1,4 +1,4 @@
-source_table: 04d_gate_c_table.csv
+source_table: gate_c_table.csv
 source_table_sha256: ea76c5822e809a879316123448fdbf0b4cf11b2f5be0d7c6f993dbf00ff3d514
 counts:
   core: 18

@@ -297,7 +297,7 @@ def render(document: dict) -> str:
 def paths(settings: dict) -> tuple[Path, list[Path], Path]:
     input_dir = Path(settings["input_dir"]).expanduser()
     return (
-        input_dir / settings["table_file"],
+        REPO_ROOT / settings["table_path"],
         [input_dir / name for name in settings["attribute_files"]],
         REPO_ROOT / settings["output_file"],
     )

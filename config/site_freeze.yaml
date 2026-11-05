@@ -1,5 +1,5 @@
 input_dir: "~/Work/rivwq_CC/02_data_audit"
-table_file: "04d_gate_c_table.csv"
+table_path: "data/processed/gate_c_table.csv"
 attribute_files: ["04b_station_candidates.csv", "04b_station_screened_all.csv"]
 basin_digits: 4
 cv_group_core_scene_share_limit: 0.25
