@@ -84,8 +84,26 @@ def layer_masks(table: pd.DataFrame) -> dict[str, pd.Series]:
     }
 
 
-def assign_layers(table: pd.DataFrame) -> dict[str, pd.DataFrame]:
+def apply_overrides(table: pd.DataFrame, overrides: dict) -> pd.DataFrame:
+    result = table.copy()
+    for site, entry in overrides.items():
+        if site not in result.index:
+            raise FreezeError(f"override for unknown site: {site}")
+        if entry["layer"] != "extended_caveat":
+            raise FreezeError(f"override layer not supported for {site}: {entry['layer']}")
+        result["caveat"] = result["caveat"].astype(bool)
+        result["caveat_reason"] = result["caveat_reason"].astype(object)
+        result.loc[site, "caveat"] = True
+        result.loc[site, "caveat_reason"] = entry["caveat_reason"]
+    return result
+
+
+def assign_layers(table: pd.DataFrame, overrides: dict | None = None) -> dict[str, pd.DataFrame]:
     masks = layer_masks(table)
+    for site, entry in (overrides or {}).items():
+        for mask in masks.values():
+            mask[site] = False
+        masks[entry["layer"]][site] = True
     membership = sum(mask.astype(int) for mask in masks.values())
     shared = list(table.index[membership > 1])
     if shared:
@@ -152,7 +170,9 @@ def read_site_attributes(paths_in_priority: list[Path]) -> pd.DataFrame:
 def build_sites(
     table: pd.DataFrame, attributes: pd.DataFrame, settings: dict
 ) -> dict[str, list[dict]]:
-    layers = assign_layers(table)
+    overrides = settings.get("layer_overrides", {})
+    table = apply_overrides(table, overrides)
+    layers = assign_layers(table, overrides)
     members = [site for frame in layers.values() for site in frame.index]
     missing = [
         site

@@ -75,6 +75,51 @@ def test_layers_follow_the_stated_rules():
     assert list(layers["extended_estimated"].index) == ["estimated"]
 
 
+OVERRIDE = {"low_coverage": {"layer": "extended_caveat", "caveat_reason": "fails 2025 rule"}}
+
+
+def test_override_moves_a_site_that_fails_the_rules_into_extended_caveat():
+    frame = table({"core": row(), "low_coverage": row(pass_turbidity_cov=False)})
+    layers = sites.assign_layers(sites.apply_overrides(frame, OVERRIDE), OVERRIDE)
+    assert list(layers["core"].index) == ["core"]
+    assert list(layers["extended_caveat"].index) == ["low_coverage"]
+
+
+def test_override_takes_a_passing_site_out_of_core():
+    frame = table({"a": row(), "b": row()})
+    overrides = {"b": OVERRIDE["low_coverage"]}
+    layers = sites.assign_layers(sites.apply_overrides(frame, overrides), overrides)
+    assert list(layers["core"].index) == ["a"]
+    assert list(layers["extended_caveat"].index) == ["b"]
+
+
+def test_override_sets_caveat_and_reason_on_the_record():
+    frame = table({"low_coverage": row(pass_turbidity_cov=False)})
+    layers = sites.build_sites(
+        frame,
+        attributes({"low_coverage": "10270104"}),
+        {**FULL, "layer_overrides": OVERRIDE},
+    )
+    record = layers["extended_caveat"][0]
+    assert record["caveat"] is True
+    assert record["caveat_reason"] == "fails 2025 rule"
+
+
+def test_override_for_unknown_site_or_layer_is_rejected():
+    frame = table({"a": row()})
+    with pytest.raises(sites.FreezeError):
+        sites.apply_overrides(frame, {"zzz": OVERRIDE["low_coverage"]})
+    with pytest.raises(sites.FreezeError):
+        sites.apply_overrides(frame, {"a": {"layer": "core", "caveat_reason": "x"}})
+
+
+def test_without_overrides_the_layers_are_unchanged():
+    frame = table({"a": row(), "b": row(pass_turbidity_cov=False)})
+    layers = sites.build_sites(frame, attributes({"a": "10270104"}), FULL)
+    assert [record["site_no"] for record in layers["core"]] == ["a"]
+    assert layers["extended_caveat"] == []
+
+
 def test_caveat_site_that_is_also_estimated_is_rejected():
     frame = table({"both": row(caveat=True, coverage_estimated=True)})
     with pytest.raises(sites.FreezeError):
