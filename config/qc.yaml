@@ -1,0 +1,69 @@
+raw_root: "data/raw/usgs"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+counts_file: "04h_qc_rule_counts.csv"
+levels:
+  lenient:
+    - value_null
+    - unreliable_qualifier
+    - physical_limit
+  standard:
+    - value_null
+    - unreliable_qualifier
+    - physical_limit
+    - temperature_zero_run
+    - turbidity_ceiling
+  strict:
+    - value_null
+    - unreliable_qualifier
+    - physical_limit
+    - temperature_zero_run
+    - turbidity_ceiling
+    - flatline
+unreliable_qualifiers:
+  - EQUIP
+  - MAINT
+  - DRY
+  - UNAVAIL
+  - TEST
+  - DISCONTINUED
+  - FORCEINTERPOLATION
+  - ICE
+physical_limits:
+  "63680":
+    min: 0.0
+  "00300":
+    min: 0.0
+  "00400":
+    min: 0.0
+    max: 14.0
+  "32316":
+    min: 0.0
+  "32318":
+    min: 0.0
+  "32319":
+    min: 0.0
+report_negative_codes:
+  - "00060"
+  - "00065"
+run_break_intervals: 4.0
+temperature_zero_run:
+  parameter_code: "00010"
+  value: 0.0
+  min_run_values: 4
+turbidity_ceiling:
+  parameter_code: "63680"
+  ceilings: {}
+flatline:
+  max_run_hours:
+    "00300": 24.0
+    "00400": 168.0
+manifest_check:
+  seed: 20261105
+  site_years: 2
+  refetched_site_years:
+    - "03378500_2019"
+    - "03378500_2020"
+    - "04157005_2018"
+    - "06887000_2021"
+    - "15041200_2023"
+  scratch_dir: "~/Work/rivwq_CC/scratch/04h/refetch"
