@@ -1,0 +1,27 @@
+run_id: "iv_20261104"
+raw_root: "data/raw/usgs"
+qc_config: "config/qc.yaml"
+qc_level: "standard"
+gate_config: "config/gate_c.yaml"
+sites_file: "config/sites.yaml"
+old_table: "data/processed/gate_c_table.csv"
+frozen_table: "data/processed/gate_c_table_iv.csv"
+output_dir: "~/Work/rivwq_CC/02_data_audit"
+output_prefix: "04i"
+coverage:
+  first_year: 2018
+  last_year: 2025
+  year_basis: "calendar_utc"
+  interval_statistic: "median"
+  merge_sensors: "union"
+  cap: 1.0
+series_codes:
+  turbidity: "63680"
+  dissolved_oxygen: "00300"
+  discharge: "00060"
+  gage: "00065"
+near_threshold_margin: 0.02
+focus_sites:
+  - "09180500"
+  - "03612600"
+  - "06887000"
