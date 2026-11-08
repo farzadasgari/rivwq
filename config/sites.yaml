@@ -1,19 +1,19 @@
-source_table: gate_c_table.csv
-source_table_sha256: ea76c5822e809a879316123448fdbf0b4cf11b2f5be0d7c6f993dbf00ff3d514
+source_table: gate_c_table_iv.csv
+source_table_sha256: e8c2e55b61596de00ea4db7da1473af069453b76c13191112199928e3c8b644c
 counts:
-  core: 18
-  extended_caveat: 2
-  extended_estimated: 4
+  core: 21
+  extended_caveat: 3
+  extended_estimated: 0
 scene_totals:
   core:
-    est_scenes_upper: 8365.0
-    est_scenes_matched: 6785.586683134965
+    est_scenes_upper: 9613.0
+    est_scenes_matched: 7963.622701407213
   extended_caveat:
-    est_scenes_upper: 1047.0
-    est_scenes_matched: 985.3752947451158
+    est_scenes_upper: 1482.0
+    est_scenes_matched: 1165.5453051021316
   extended_estimated:
-    est_scenes_upper: 1683.0
-    est_scenes_matched: 1369.8979104509533
+    est_scenes_upper: 0
+    est_scenes_matched: 0
 cv_groups:
   broad:
     members:
@@ -23,33 +23,33 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 593.0
-    est_scenes_matched: 562.142604236844
-    core_est_scenes_matched: 562.142604236844
-    core_scene_share: 0.08284362583326872
+    est_scenes_matched: 569.3310872858809
+    core_est_scenes_matched: 569.3310872858809
+    core_scene_share: 0.07149146922609445
     exceeds_core_scene_share_limit: false
   colorado:
     members:
     - '09180500'
     sites_per_layer:
-      core: 1
-      extended_caveat: 0
+      core: 0
+      extended_caveat: 1
       extended_estimated: 0
     est_scenes_upper: 435.0
-    est_scenes_matched: 192.78479395912868
-    core_est_scenes_matched: 192.78479395912868
-    core_scene_share: 0.028410924944526895
+    est_scenes_matched: 190.2151522381915
+    core_est_scenes_matched: 0.0
+    core_scene_share: 0.0
     exceeds_core_scene_share_limit: false
   connecticut:
     members:
     - '01184000'
     sites_per_layer:
-      core: 0
+      core: 1
       extended_caveat: 0
-      extended_estimated: 1
+      extended_estimated: 0
     est_scenes_upper: 261.0
-    est_scenes_matched: 200.41071428571428
-    core_est_scenes_matched: 0.0
-    core_scene_share: 0.0
+    est_scenes_matched: 192.22892467156973
+    core_est_scenes_matched: 192.22892467156973
+    core_scene_share: 0.024138376701046106
     exceeds_core_scene_share_limit: false
   delaware+schuylkill:
     members:
@@ -61,9 +61,9 @@ cv_groups:
       extended_caveat: 1
       extended_estimated: 0
     est_scenes_upper: 1040.0
-    est_scenes_matched: 897.6001543902987
-    core_est_scenes_matched: 372.2954908675799
-    core_scene_share: 0.05486563037988899
+    est_scenes_matched: 895.9443245287977
+    core_est_scenes_matched: 371.3193248406973
+    core_scene_share: 0.04662693585107733
     exceeds_core_scene_share_limit: false
   fox:
     members:
@@ -73,7 +73,7 @@ cv_groups:
       extended_caveat: 1
       extended_estimated: 0
     est_scenes_upper: 505.0
-    est_scenes_matched: 460.0706312223969
+    est_scenes_matched: 450.7051531758397
     core_est_scenes_matched: 0.0
     core_scene_share: 0.0
     exceeds_core_scene_share_limit: false
@@ -85,9 +85,9 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 574.0
-    est_scenes_matched: 500.49263792200014
-    core_est_scenes_matched: 500.49263792200014
-    core_scene_share: 0.07375819679172838
+    est_scenes_matched: 538.0832971139931
+    core_est_scenes_matched: 538.0832971139931
+    core_scene_share: 0.06756765322632764
     exceeds_core_scene_share_limit: false
   kansas:
     members:
@@ -101,21 +101,21 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 2255.0
-    est_scenes_matched: 1912.945062317539
-    core_est_scenes_matched: 1912.945062317539
-    core_scene_share: 0.28191299465262326
-    exceeds_core_scene_share_limit: true
+    est_scenes_matched: 1917.8100767156038
+    core_est_scenes_matched: 1917.8100767156038
+    core_scene_share: 0.24082131319163538
+    exceeds_core_scene_share_limit: false
   klamath:
     members:
     - '11530500'
     sites_per_layer:
-      core: 0
+      core: 1
       extended_caveat: 0
-      extended_estimated: 1
+      extended_estimated: 0
     est_scenes_upper: 638.9999999999999
-    est_scenes_matched: 484.95535714285705
-    core_est_scenes_matched: 0.0
-    core_scene_share: 0.0
+    est_scenes_matched: 464.23376980757354
+    core_est_scenes_matched: 464.23376980757354
+    core_scene_share: 0.0582942948471857
     exceeds_core_scene_share_limit: false
   missouri:
     members:
@@ -125,9 +125,9 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 632.0000000000001
-    est_scenes_matched: 604.7370461860919
-    core_est_scenes_matched: 604.7370461860919
-    core_scene_share: 0.08912081952900515
+    est_scenes_matched: 551.032367380293
+    core_est_scenes_matched: 551.032367380293
+    core_scene_share: 0.06919368082103171
     exceeds_core_scene_share_limit: false
   ohio:
     members:
@@ -138,9 +138,9 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 771.0
-    est_scenes_matched: 619.788775357437
-    core_est_scenes_matched: 619.788775357437
-    core_scene_share: 0.09133901080327698
+    est_scenes_matched: 611.0788504687071
+    core_est_scenes_matched: 611.0788504687071
+    core_scene_share: 0.07673377724948299
     exceeds_core_scene_share_limit: false
   potomac:
     members:
@@ -151,9 +151,9 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 1048.0
-    est_scenes_matched: 688.2735936447339
-    core_est_scenes_matched: 688.2735936447339
-    core_scene_share: 0.1014317001292435
+    est_scenes_matched: 771.9617546282001
+    core_est_scenes_matched: 771.9617546282001
+    core_scene_share: 0.09693600306953147
     exceeds_core_scene_share_limit: false
   saginaw:
     members:
@@ -163,33 +163,33 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 446.99999999999994
-    est_scenes_matched: 382.2955872445542
-    core_est_scenes_matched: 382.2955872445542
-    core_scene_share: 0.056339356506154355
+    est_scenes_matched: 374.4269464873867
+    core_est_scenes_matched: 374.4269464873867
+    core_scene_share: 0.047017162983025745
     exceeds_core_scene_share_limit: false
   taku:
     members:
     - '15041200'
     sites_per_layer:
-      core: 0
+      core: 1
       extended_caveat: 0
-      extended_estimated: 1
+      extended_estimated: 0
     est_scenes_upper: 284.0
-    est_scenes_matched: 221.875
-    core_est_scenes_matched: 0.0
-    core_scene_share: 0.0
+    est_scenes_matched: 215.0413308287796
+    core_est_scenes_matched: 215.0413308287796
+    core_scene_share: 0.02700295316486813
     exceeds_core_scene_share_limit: false
   w_fk_san_jacinto:
     members:
     - '08069500'
     sites_per_layer:
-      core: 0
+      core: 1
       extended_caveat: 0
-      extended_estimated: 1
+      extended_estimated: 0
     est_scenes_upper: 499.0
-    est_scenes_matched: 462.6568390223819
-    core_est_scenes_matched: 0.0
-    core_scene_share: 0.0
+    est_scenes_matched: 471.71028090262183
+    core_est_scenes_matched: 471.71028090262183
+    core_scene_share: 0.05923312775971521
     exceeds_core_scene_share_limit: false
   wabash+white:
     members:
@@ -200,9 +200,9 @@ cv_groups:
       extended_caveat: 0
       extended_estimated: 0
     est_scenes_upper: 1112.0
-    est_scenes_matched: 949.8310913990567
-    core_est_scenes_matched: 949.8310913990567
-    core_scene_share: 0.13997774043028383
+    est_scenes_matched: 915.3646902759065
+    core_est_scenes_matched: 915.3646902759065
+    core_scene_share: 0.11494325190897817
     exceeds_core_scene_share_limit: false
 grouping_conflicts:
   same_river_different_basin:
@@ -217,6 +217,31 @@ grouping_conflicts:
     - '03378500'
 layers:
   core:
+  - site_no: '01184000'
+    station: CONNECTICUT RIVER AT THOMPSONVILLE, CT
+    state: CT
+    region: Northeast
+    river_group: connecticut
+    basin_group: 0108
+    cv_group: connecticut
+    role: pool
+    drainage_area_sqmi: 9660.0
+    pixels_across: 26.388455108690454
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 261.0
+    est_scenes_matched: 192.22892467156973
   - site_no: '01438500'
     station: Delaware River at Montague NJ
     state: PA
@@ -241,7 +266,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 234.99999999999997
-    est_scenes_matched: 171.6681684632083
+    est_scenes_matched: 168.93041948935797
   - site_no: '01473500'
     station: Schuylkill River at Norristown, PA
     state: PA
@@ -266,7 +291,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 263.0
-    est_scenes_matched: 200.62732240437157
+    est_scenes_matched: 202.38890535133928
   - site_no: '01638500'
     station: POTOMAC RIVER AT POINT OF ROCKS, MD
     state: MD
@@ -291,7 +316,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 509.0
-    est_scenes_matched: 274.5757616588068
+    est_scenes_matched: 279.23140180738017
   - site_no: '01646500'
     station: POTOMAC RIVER NEAR WASH, DC LITTLE FALLS PUMP STA
     state: MD
@@ -316,7 +341,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 539.0
-    est_scenes_matched: 413.6978319859271
+    est_scenes_matched: 492.7303528208199
   - site_no: '02035000'
     station: JAMES RIVER AT CARTERSVILLE, VA
     state: VA
@@ -341,7 +366,7 @@ layers:
       regime_class: unknown
       cloud_class: cloudier
     est_scenes_upper: 574.0
-    est_scenes_matched: 500.49263792200014
+    est_scenes_matched: 538.0832971139931
   - site_no: '02162035'
     station: BROAD RIVER NEAR COLUMBIA, SC
     state: SC
@@ -366,7 +391,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 593.0
-    est_scenes_matched: 562.142604236844
+    est_scenes_matched: 569.3310872858809
   - site_no: '03216070'
     station: OHIO RIVER AT IRONTON, OH
     state: OH
@@ -391,7 +416,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 485.0
-    est_scenes_matched: 467.0852421588442
+    est_scenes_matched: 454.3085228415768
   - site_no: '03374100'
     station: WHITE RIVER AT HAZLETON, IN
     state: IN
@@ -416,7 +441,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 548.0
-    est_scenes_matched: 514.8114192679093
+    est_scenes_matched: 499.78717160871577
   - site_no: '03378500'
     station: WABASH RIVER AT NEW HARMONY, IN
     state: IN
@@ -441,7 +466,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 564.0
-    est_scenes_matched: 435.0196721311475
+    est_scenes_matched: 415.57751866719065
   - site_no: '03612600'
     station: OHIO RIVER AT OLMSTED, IL
     state: IL
@@ -466,7 +491,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 286.0
-    est_scenes_matched: 152.70353319859274
+    est_scenes_matched: 156.77032762713026
   - site_no: '04157005'
     station: SAGINAW RIVER AT HOLLAND AVENUE AT SAGINAW, MI
     state: MI
@@ -491,7 +516,7 @@ layers:
       regime_class: snowmelt
       cloud_class: cloudier
     est_scenes_upper: 446.99999999999994
-    est_scenes_matched: 382.2955872445542
+    est_scenes_matched: 374.4269464873867
   - site_no: '06818000'
     station: Missouri River at St. Joseph, MO
     state: MO
@@ -516,7 +541,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 632.0000000000001
-    est_scenes_matched: 604.7370461860919
+    est_scenes_matched: 551.032367380293
   - site_no: '06887000'
     station: BIG BLUE R NR MANHATTAN, KS
     state: KS
@@ -541,7 +566,7 @@ layers:
       regime_class: rain_fed
       cloud_class: sunnier
     est_scenes_upper: 342.0
-    est_scenes_matched: 201.25012912643166
+    est_scenes_matched: 199.536334353245
   - site_no: '06887500'
     station: KANSAS R AT WAMEGO, KS
     state: KS
@@ -566,7 +591,7 @@ layers:
       regime_class: rain_fed
       cloud_class: sunnier
     est_scenes_upper: 345.0
-    est_scenes_matched: 314.76956546148665
+    est_scenes_matched: 316.5747058981773
   - site_no: '06888990'
     station: KANSAS R AB TOPEKA WEIR AT TOPEKA, KS
     state: KS
@@ -591,7 +616,7 @@ layers:
       regime_class: rain_fed
       cloud_class: sunnier
     est_scenes_upper: 338.0
-    est_scenes_matched: 270.5394733887267
+    est_scenes_matched: 271.0863832824938
   - site_no: '06892350'
     station: KANSAS R AT DESOTO, KS
     state: KS
@@ -616,7 +641,7 @@ layers:
       regime_class: rain_fed
       cloud_class: sunnier
     est_scenes_upper: 617.0
-    est_scenes_matched: 559.9774964443446
+    est_scenes_matched: 562.7680324457451
   - site_no: '06892518'
     station: KANSAS R NR LAKE QUIVIRA, KS
     state: KS
@@ -641,17 +666,17 @@ layers:
       regime_class: rain_fed
       cloud_class: sunnier
     est_scenes_upper: 613.0
-    est_scenes_matched: 566.4083978965491
-  - site_no: '09180500'
-    station: COLORADO RIVER NEAR CISCO, UT
-    state: UT
-    region: West
-    river_group: colorado
-    basin_group: '1403'
-    cv_group: colorado
-    role: pool
-    drainage_area_sqmi: 24100.0
-    pixels_across: 10.459171558568617
+    est_scenes_matched: 567.8446207359426
+  - site_no: '08069500'
+    station: W Fk San Jacinto Rv nr Humble, TX
+    state: TX
+    region: South
+    river_group: w_fk_san_jacinto
+    basin_group: '1204'
+    cv_group: w_fk_san_jacinto
+    role: shortlist
+    drainage_area_sqmi: 1741.0
+    pixels_across: 16.445201712975596
     targets:
       turbidity: true
       dissolved_oxygen: true
@@ -662,11 +687,61 @@ layers:
     coverage_estimated: false
     strata:
       turbidity_class: turbid
-      regulation_class: regulated
-      regime_class: snowmelt
+      regulation_class: mixed
+      regime_class: rain_fed
       cloud_class: sunnier
-    est_scenes_upper: 435.0
-    est_scenes_matched: 192.78479395912868
+    est_scenes_upper: 499.0
+    est_scenes_matched: 471.71028090262183
+  - site_no: '11530500'
+    station: KLAMATH R NR KLAMATH CA
+    state: CA
+    region: West
+    river_group: klamath
+    basin_group: '1801'
+    cv_group: klamath
+    role: pool
+    drainage_area_sqmi: 12100.0
+    pixels_across: 17.695984171214384
+    targets:
+      turbidity: true
+      dissolved_oxygen: false
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: clear
+      regulation_class: regulated
+      regime_class: rain_fed
+      cloud_class: sunnier
+    est_scenes_upper: 638.9999999999999
+    est_scenes_matched: 464.23376980757354
+  - site_no: '15041200'
+    station: TAKU R NR JUNEAU AK
+    state: AK
+    region: West
+    river_group: taku
+    basin_group: '1901'
+    cv_group: taku
+    role: pool
+    drainage_area_sqmi: 6500.0
+    pixels_across: 26.012117995037
+    targets:
+      turbidity: true
+      dissolved_oxygen: true
+      fchl: false
+    fchl_code: null
+    caveat: false
+    caveat_reason: null
+    coverage_estimated: false
+    strata:
+      turbidity_class: unknown
+      regulation_class: free_flowing
+      regime_class: rain_fed
+      cloud_class: cloudier
+    est_scenes_upper: 284.0
+    est_scenes_matched: 215.0413308287796
   extended_caveat:
   - site_no: '01463500'
     station: Delaware River at Trenton NJ
@@ -692,7 +767,7 @@ layers:
       regime_class: rain_fed
       cloud_class: cloudier
     est_scenes_upper: 542.0
-    est_scenes_matched: 525.3046635227188
+    est_scenes_matched: 524.6249996881004
   - site_no: '040851385'
     station: FOX RIVER AT OIL TANK DEPOT AT GREEN BAY, WI
     state: WI
@@ -717,105 +792,30 @@ layers:
       regime_class: snowmelt
       cloud_class: cloudier
     est_scenes_upper: 505.0
-    est_scenes_matched: 460.0706312223969
-  extended_estimated:
-  - site_no: '01184000'
-    station: CONNECTICUT RIVER AT THOMPSONVILLE, CT
-    state: CT
-    region: Northeast
-    river_group: connecticut
-    basin_group: 0108
-    cv_group: connecticut
+    est_scenes_matched: 450.7051531758397
+  - site_no: '09180500'
+    station: COLORADO RIVER NEAR CISCO, UT
+    state: UT
+    region: West
+    river_group: colorado
+    basin_group: '1403'
+    cv_group: colorado
     role: pool
-    drainage_area_sqmi: 9660.0
-    pixels_across: 26.388455108690454
+    drainage_area_sqmi: 24100.0
+    pixels_across: 10.459171558568617
     targets:
-      turbidity: true
+      turbidity: false
       dissolved_oxygen: true
       fchl: false
     fchl_code: null
-    caveat: false
-    caveat_reason: null
-    coverage_estimated: true
-    strata:
-      turbidity_class: clear
-      regulation_class: regulated
-      regime_class: rain_fed
-      cloud_class: cloudier
-    est_scenes_upper: 261.0
-    est_scenes_matched: 200.41071428571428
-  - site_no: '08069500'
-    station: W Fk San Jacinto Rv nr Humble, TX
-    state: TX
-    region: South
-    river_group: w_fk_san_jacinto
-    basin_group: '1204'
-    cv_group: w_fk_san_jacinto
-    role: shortlist
-    drainage_area_sqmi: 1741.0
-    pixels_across: 16.445201712975596
-    targets:
-      turbidity: true
-      dissolved_oxygen: true
-      fchl: false
-    fchl_code: null
-    caveat: false
-    caveat_reason: null
-    coverage_estimated: true
+    caveat: true
+    caveat_reason: fails the 2025 turbidity rule on 15-minute data (0.753 < 0.80); kept by decision 2026-11-08
+    coverage_estimated: false
     strata:
       turbidity_class: turbid
-      regulation_class: mixed
-      regime_class: rain_fed
-      cloud_class: sunnier
-    est_scenes_upper: 499.0
-    est_scenes_matched: 462.6568390223819
-  - site_no: '11530500'
-    station: KLAMATH R NR KLAMATH CA
-    state: CA
-    region: West
-    river_group: klamath
-    basin_group: '1801'
-    cv_group: klamath
-    role: pool
-    drainage_area_sqmi: 12100.0
-    pixels_across: 17.695984171214384
-    targets:
-      turbidity: true
-      dissolved_oxygen: false
-      fchl: false
-    fchl_code: null
-    caveat: false
-    caveat_reason: null
-    coverage_estimated: true
-    strata:
-      turbidity_class: clear
       regulation_class: regulated
-      regime_class: rain_fed
+      regime_class: snowmelt
       cloud_class: sunnier
-    est_scenes_upper: 638.9999999999999
-    est_scenes_matched: 484.95535714285705
-  - site_no: '15041200'
-    station: TAKU R NR JUNEAU AK
-    state: AK
-    region: West
-    river_group: taku
-    basin_group: '1901'
-    cv_group: taku
-    role: pool
-    drainage_area_sqmi: 6500.0
-    pixels_across: 26.012117995037
-    targets:
-      turbidity: true
-      dissolved_oxygen: true
-      fchl: false
-    fchl_code: null
-    caveat: false
-    caveat_reason: null
-    coverage_estimated: true
-    strata:
-      turbidity_class: unknown
-      regulation_class: free_flowing
-      regime_class: rain_fed
-      cloud_class: cloudier
-    est_scenes_upper: 284.0
-    est_scenes_matched: 221.875
+    est_scenes_upper: 435.0
+    est_scenes_matched: 190.2151522381915
+  extended_estimated: []
