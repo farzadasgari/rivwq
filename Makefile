@@ -1,6 +1,6 @@
 PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest site-rules-iv check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
 
 check: lint test nocomments
 
@@ -67,3 +67,6 @@ qc-rules:
 
 harden-manifest:
 	$(PY) pipeline/harden_manifest.py --run-id $(RUN_ID)
+
+site-rules-iv:
+	$(PY) pipeline/site_rules_iv.py
