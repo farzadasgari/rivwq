@@ -71,3 +71,17 @@ checks:
   jump_threshold_relative: 0.05
   minimum_scenes_per_group: 5
   minimum_scenes_per_month: 3
+phases:
+  - name: phase1
+    years: "2025-2026"
+  - name: phase2
+    years: "2024"
+  - name: phase3
+    years: "2023"
+  - name: phase4
+    years: "2018-2022"
+eta:
+  seconds_per_scene: 9.65
+  scenes_per_site_year: 235
+  scene_factor_by_year:
+    2025: 1.2
