@@ -105,7 +105,7 @@ def scene_batch_collection(
     return ee.FeatureCollection(chosen.map(compute))
 
 
-def roi_area_table(config: dict, point, epsg: str) -> dict:
+def roi_area_table(config: dict, point, epsg: str, rois: list[str] | None = None) -> dict:
     import ee
 
     water = masks.connected_water(config, point)
@@ -114,7 +114,8 @@ def roi_area_table(config: dict, point, epsg: str) -> dict:
     result = {}
     for erosion in config["masks"]["erosion_pixels"]:
         mask = masks.eroded(water, projection, erosion, config["masks"]["erosion_kernel"])
-        for roi, radius in config["roi"]["variants"].items():
+        for roi in rois or list(config["roi"]["variants"]):
+            radius = config["roi"]["variants"][roi]
             total = (
                 area.updateMask(mask)
                 .reduceRegion(
@@ -131,7 +132,7 @@ def roi_area_table(config: dict, point, epsg: str) -> dict:
     return ee.Dictionary(result)
 
 
-def water_polygons(config: dict, point) -> dict:
+def water_polygons(config: dict, point, rois: list[str] | None = None) -> dict:
 
     water = masks.connected_water(config, point)
     radius = max(config["roi"]["variants"].values())
@@ -150,6 +151,6 @@ def water_polygons(config: dict, point) -> dict:
     )
     polygon = vectors.geometry(maxError=1)
     return {
-        name: polygon.intersection(point.buffer(radius_m), 1)
-        for name, radius_m in config["roi"]["variants"].items()
+        name: polygon.intersection(point.buffer(config["roi"]["variants"][name]), 1)
+        for name in rois or list(config["roi"]["variants"])
     }
