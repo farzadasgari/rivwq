@@ -22,7 +22,7 @@ def sample_long() -> pd.DataFrame:
         ("a", (1, 2, 2), (1, 2, 8), (1, 2, 8)),
         ("b", (1, 2, 2.2), (1, 2, 6), (1, 2, 6)),
         ("c", (1, 2, 14), (1, 2, 16), (1, 2, 8)),
-        ("d", (0.2, 2, 8), (0.2, 2, 8), (0.2, 2, 8)),
+        ("d", (0.05, 2, 8), (0.05, 2, 8), (0.05, 2, 8)),
     )
     for site, current, closed, capped in cases:
         rows += long_rows("current", site, *current)
