@@ -83,5 +83,13 @@ phases:
 eta:
   seconds_per_scene: 9.65
   scenes_per_site_year: 235
+  scenes_per_date: 1.97
+  skipped_roi_cost_factor: 0.45
   scene_factor_by_year:
     2025: 1.2
+    2026: 1.02
+  dates_table: data/processed/gate_c_table_iv.csv
+roi_plan:
+  flags_file: config/roi_flags.yaml
+  flags_key: extended_invalid
+  skipped_roi: extended
