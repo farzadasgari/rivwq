@@ -38,3 +38,21 @@ def test_gauge_file_has_all_frozen_sites():
 
 def test_utm_epsg_for_kansas():
     assert roi.utm_epsg(-95.68) == "EPSG:32615"
+
+
+def test_hash_is_unchanged_without_skips_and_changes_with_them():
+    gauges = {"1": (-95.0, 39.0), "2": (-96.0, 40.0)}
+    base = roi.roi_hash(gauges, CONFIG)
+    assert roi.roi_hash(gauges, CONFIG, {}) == base
+    assert roi.roi_hash(gauges, CONFIG, None) == base
+    skipped = roi.roi_hash(gauges, CONFIG, {"1": ["extended"]})
+    assert skipped != base
+    assert roi.roi_hash(gauges, CONFIG, {"2": ["extended"]}) != skipped
+    assert roi.roi_hash(gauges, CONFIG, {"1": ["reach"]}) != skipped
+
+
+def test_hash_does_not_depend_on_the_order_of_skips():
+    gauges = {"1": (-95.0, 39.0), "2": (-96.0, 40.0)}
+    first = roi.roi_hash(gauges, CONFIG, {"1": ["extended"], "2": ["extended"]})
+    second = roi.roi_hash(gauges, CONFIG, {"2": ["extended"], "1": ["extended"]})
+    assert first == second
