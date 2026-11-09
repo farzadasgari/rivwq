@@ -9,6 +9,8 @@ import rivwq
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_FILES = ["study", "sites", "gee", "features", "models", "validation"]
 PIPELINE_STEPS = sorted((ROOT / "pipeline").glob("[0-9][0-9]_*.py"))
+IMPLEMENTED_STEPS = {"02_extract_gee.py"}
+STUB_STEPS = [path for path in PIPELINE_STEPS if path.name not in IMPLEMENTED_STEPS]
 
 
 def test_package_imports():
@@ -30,7 +32,7 @@ def test_pipeline_has_ten_numbered_steps():
     assert [path.name[:2] for path in PIPELINE_STEPS] == [f"{n:02d}" for n in range(1, 11)]
 
 
-@pytest.mark.parametrize("path", PIPELINE_STEPS, ids=lambda path: path.name)
+@pytest.mark.parametrize("path", STUB_STEPS, ids=lambda path: path.name)
 def test_pipeline_step_is_a_stub(path):
     with pytest.raises(NotImplementedError):
         runpy.run_path(str(path), run_name="__main__")
