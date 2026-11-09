@@ -1,6 +1,6 @@
 PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 
-.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest site-rules-iv check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest site-rules-iv gee-pilot gee-full gee-start gee-stop gee-status gee-checks roi-connectivity check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
 
 check: lint test nocomments
 
@@ -70,3 +70,25 @@ harden-manifest:
 
 site-rules-iv:
 	$(PY) pipeline/site_rules_iv.py
+
+gee-pilot:
+	$(PY) pipeline/02_extract_gee.py --mode pilot
+
+gee-full:
+	$(PY) pipeline/02_extract_gee.py --mode full --run-id $(RUN_ID)
+
+gee-checks:
+	$(PY) pipeline/gee_checks.py --run-id $(RUN_ID) --out $(OUT)
+
+gee-start:
+	mkdir -p data/interim/gee_logs
+	nohup $(PY) pipeline/02_extract_gee.py --mode full --run-id $(RUN_ID) >> data/interim/gee_logs/$(RUN_ID).log 2>&1 & echo $$! > data/interim/gee_logs/$(RUN_ID).pid
+
+gee-stop:
+	kill -TERM $$(cat data/interim/gee_logs/$(RUN_ID).pid)
+
+gee-status:
+	$(PY) pipeline/gee_status.py --run-id $(RUN_ID)
+
+roi-connectivity:
+	$(PY) pipeline/roi_connectivity_survey.py --report-dir $(OUT)
