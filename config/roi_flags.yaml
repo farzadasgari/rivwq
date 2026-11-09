@@ -1,0 +1,88 @@
+source_table: data/interim/roi_connectivity/areas.csv
+source_table_sha256: d17e292817074c44ded258b68ec05b76525e5ad1815b027a200d6caf754bc8b6
+variant: current
+applies_to: analysis time only; raw statistics are stored for every ROI
+criteria:
+  broken_ratio: 1.3
+  leakage_ratio: 6.0
+  tiny_area_km2: 0.1
+counts:
+  extended_invalid: 10
+  broken: 8
+  leakage: 2
+  tiny_extended: 1
+extended_invalid:
+  01438500:
+    reasons:
+    - broken
+    area_1km_km2: 0.2169
+    area_5km_km2: 0.894
+    area_20km_km2: 1.0457
+    ratio_20_5: 1.1697
+  '01473500':
+    reasons:
+    - broken
+    area_1km_km2: 0.1982
+    area_5km_km2: 0.7313
+    area_20km_km2: 0.7686
+    ratio_20_5: 1.051
+  '01646500':
+    reasons:
+    - broken
+    area_1km_km2: 0.5951
+    area_5km_km2: 1.7799
+    area_20km_km2: 1.7799
+    ratio_20_5: 1.0
+  040851385:
+    reasons:
+    - broken
+    area_1km_km2: 0.2957
+    area_5km_km2: 0.3914
+    area_20km_km2: 0.3914
+    ratio_20_5: 1.0
+  '04157005':
+    reasons:
+    - broken
+    area_1km_km2: 0.2444
+    area_5km_km2: 0.311
+    area_20km_km2: 0.311
+    ratio_20_5: 1.0
+  06887000:
+    reasons:
+    - broken
+    - tiny_extended
+    area_1km_km2: 0.0619
+    area_5km_km2: 0.062
+    area_20km_km2: 0.062
+    ratio_20_5: 1.0
+  06887500:
+    reasons:
+    - broken
+    area_1km_km2: 0.2651
+    area_5km_km2: 1.742
+    area_20km_km2: 1.9708
+    ratio_20_5: 1.1314
+  06888990:
+    reasons:
+    - broken
+    area_1km_km2: 0.3029
+    area_5km_km2: 0.7606
+    area_20km_km2: 0.7606
+    ratio_20_5: 1.0
+  '11530500':
+    reasons:
+    - leakage
+    area_1km_km2: 0.2125
+    area_5km_km2: 1.5783
+    area_20km_km2: 285.7621
+    ratio_20_5: 181.0514
+  '15041200':
+    reasons:
+    - leakage
+    area_1km_km2: 0.4778
+    area_5km_km2: 2.8741
+    area_20km_km2: 37.3631
+    ratio_20_5: 12.9998
+near_gauge_tiny:
+- 06887000
+- 08069500
