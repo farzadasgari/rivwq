@@ -13,12 +13,14 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from rivwq.gee import extract, manifest, roi, session, stats, status
+from rivwq.gee import extract, lock, manifest, roi, session, stats, status
+from rivwq.gee import years as year_parser
 
 REPO_ROOT = roi.REPO_ROOT
 CONFIG_PATH = REPO_ROOT / "config" / "gee.yaml"
 QUOTA_MARKERS = ("quota", "too many requests", "429", "rate limit")
 ROI_AREAS_NAME = "roi_areas.parquet"
+LOCK_NAME = "run.lock"
 
 
 def load_config(path: Path = CONFIG_PATH) -> dict:
@@ -225,14 +227,10 @@ def initial_manifest(
     }
 
 
-def run(
-    config: dict, run_id: str, sites: list[str], years: list[int], raw_root: Path | None = None
-) -> dict:
-    session.initialize()
-    gauges = roi.load_gauges(REPO_ROOT / config["roi"]["gauges_file"])
-    run_dir = (raw_root or REPO_ROOT / config["raw_root"]) / run_id
+def open_run(
+    config: dict, run_id: str, run_dir: Path, gauges: dict, sites: list[str]
+) -> tuple[dict, datetime]:
     manifest_path = run_dir / "manifest.json"
-    state_path = run_dir / "run_state.json"
     if manifest_path.exists():
         current = manifest.read_json(manifest_path)
         run_start = datetime.strptime(
@@ -240,21 +238,54 @@ def run(
         ).replace(tzinfo=UTC)
         if current["roi_hash"] != roi.roi_hash(gauges, config):
             raise RuntimeError("ROI hash differs from the run being resumed")
-    else:
-        run_start = datetime.now(UTC).replace(microsecond=0)
-        current = initial_manifest(config, run_id, run_start, gauges, sites)
-        run_dir.mkdir(parents=True, exist_ok=True)
-        manifest.atomic_write_json(manifest_path, current)
+        if sorted(current["sites"]) != sorted(sites):
+            raise RuntimeError("site list differs from the run being resumed")
+        return current, run_start
+    run_start = datetime.now(UTC).replace(microsecond=0)
+    current = initial_manifest(config, run_id, run_start, gauges, sites)
+    manifest.atomic_write_json(manifest_path, current)
+    return current, run_start
+
+
+def run(
+    config: dict, run_id: str, sites: list[str], years: list[int], raw_root: Path | None = None
+) -> dict:
+    session.initialize()
+    gauges = roi.load_gauges(REPO_ROOT / config["roi"]["gauges_file"])
+    run_dir = (raw_root or REPO_ROOT / config["raw_root"]) / run_id
+    lock_path = run_dir / LOCK_NAME
+    lock.acquire(lock_path)
+    try:
+        current, run_start = open_run(config, run_id, run_dir, gauges, sites)
+        return run_locked(config, gauges, run_dir, current, run_start, sites, years)
+    finally:
+        lock.release(lock_path)
+
+
+def run_locked(
+    config: dict,
+    gauges: dict,
+    run_dir: Path,
+    current: dict,
+    run_start: datetime,
+    sites: list[str],
+    years: list[int],
+) -> dict:
+    run_id = current["run_id"]
+    manifest_path = run_dir / "manifest.json"
+    state_path = run_dir / "run_state.json"
     for leftover in status.remove_partial_files(run_dir):
         print(f"removed partial file {leftover}")
     jobs = plan_jobs(sites, years)
     names = [job_name(*job) for job in jobs]
+    previous = manifest.read_json(state_path) if state_path.exists() else None
+    carried = manifest.carry_over(previous, names, years)
     done = manifest.completed_names(run_dir, current)
     failed: dict = {}
-    lock = threading.Lock()
+    guard = threading.Lock()
     started = current["run_started_utc"]
     manifest.atomic_write_json(
-        state_path, manifest.build_state(run_id, started, names, done, failed)
+        state_path, manifest.snapshot(run_id, started, carried, done, failed)
     )
     areas_path = run_dir / ROI_AREAS_NAME
     areas_entry_ok = any(
@@ -274,19 +305,19 @@ def run(
         try:
             entry = process_site_year(config, gauges, site, year, run_dir, run_start)
         except Exception as error:
-            with lock:
+            with guard:
                 failed[name] = f"{type(error).__name__}: {error}"
                 manifest.atomic_write_json(
-                    state_path, manifest.build_state(run_id, started, names, done, failed)
+                    state_path, manifest.snapshot(run_id, started, carried, done, failed)
                 )
             return
-        with lock:
+        with guard:
             nonlocal current
             current = manifest.upsert_entry(current, entry)
             done.add(name)
             manifest.atomic_write_json(manifest_path, current)
             manifest.atomic_write_json(
-                state_path, manifest.build_state(run_id, started, names, done, failed)
+                state_path, manifest.snapshot(run_id, started, carried, done, failed)
             )
         print(f"done {name}: {entry['scenes']} scenes, {entry['seconds']} s", flush=True)
 
@@ -314,13 +345,21 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     parser.add_argument("--mode", choices=["pilot", "full"], default="pilot")
     parser.add_argument("--run-id")
+    parser.add_argument("--years")
     args = parser.parse_args(argv)
     config = load_config(args.config)
     today = datetime.now(UTC)
+    first_year = int(config["date_start"][:4])
+    chosen = None
+    if args.years:
+        try:
+            chosen = year_parser.parse_years(args.years, first_year, today.year)
+        except ValueError as error:
+            raise SystemExit(f"bad --years: {error}") from error
     if args.mode == "pilot":
         run_id = args.run_id or f"gee_pilot_{today:%Y%m%d}"
-        run(config, run_id, config["pilot"]["sites"], config["pilot"]["years"])
+        run(config, run_id, config["pilot"]["sites"], chosen or config["pilot"]["years"])
         return
     if not args.run_id:
         raise SystemExit("full mode needs --run-id so a resume reuses the same run")
-    run(config, args.run_id, all_sites(config), all_years(today, config))
+    run(config, args.run_id, all_sites(config), chosen or all_years(today, config))
