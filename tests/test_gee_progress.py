@@ -120,3 +120,68 @@ def test_real_phase_list_covers_every_year_once():
         covered += progress.phase_years(phase, 2018, 2026)
     assert sorted(covered) == list(range(2018, 2027))
     assert len(covered) == len(set(covered))
+
+
+PLAN_CONFIG = {
+    **CONFIG,
+    "roi": {"variants": {"near_gauge": 1000, "reach": 5000, "extended": 20000}},
+    "roi_plan": {"skipped_roi": "extended"},
+    "eta": {**CONFIG["eta"], "skipped_roi_cost_factor": 0.5},
+}
+
+
+def planned_sample() -> tuple[dict, dict]:
+    state, manifest = sample()
+    manifest["roi_plan"] = {
+        "a": ["near_gauge", "reach"],
+        "b": ["near_gauge", "reach", "extended"],
+    }
+    manifest["skipped_site_rois"] = ["a:extended"]
+    return state, manifest
+
+
+def test_skipped_site_rois_are_counted_but_never_pending():
+    state, manifest = planned_sample()
+    result = progress.report(state, manifest, PLAN_CONFIG, False)
+    assert result["roi_plan"] == {
+        "site_roi_possible": 6,
+        "site_roi_planned": 5,
+        "site_roi_skipped": 1,
+        "skipped": ["a:extended"],
+    }
+    assert result["overall"]["total"] == 6
+    assert result["by_year"][2024]["pending"] == 1
+    assert result["by_year"][2024]["combos_total"] == 5
+    assert result["by_year"][2024]["combos_done"] == 2
+
+
+def test_a_skipped_site_costs_less_in_the_estimate():
+    state, manifest = planned_sample()
+    manifest["files"] = [{"path": "roi_areas.parquet", "rows": 1}]
+    cheap = progress.remaining_hours(["a_2024"], manifest, PLAN_CONFIG)
+    full = progress.remaining_hours(["b_2024"], manifest, PLAN_CONFIG)
+    assert cheap == pytest.approx(full * 0.5)
+
+
+def test_observed_rate_is_normalised_by_the_cost_weight():
+    state, manifest = planned_sample()
+    plan = progress.plan_of(manifest, PLAN_CONFIG)
+    rate = progress.weighted_seconds_per_scene(manifest, PLAN_CONFIG, plan)
+    assert rate == pytest.approx(500.0 / (100 * 0.5))
+
+
+def test_a_manifest_without_a_plan_means_every_roi(tmp_path):
+    state, manifest = sample()
+    plan = progress.plan_of(manifest, PLAN_CONFIG)
+    assert plan == {site: ["near_gauge", "reach", "extended"] for site in ["a", "b"]}
+    result = progress.report(state, manifest, PLAN_CONFIG, False)
+    assert result["roi_plan"]["site_roi_skipped"] == 0
+    assert progress.cost_weight("a", plan, PLAN_CONFIG) == 1.0
+
+
+def test_text_report_says_skipped_combinations_are_not_pending():
+    state, manifest = planned_sample()
+    text = progress.format_report(progress.report(state, manifest, PLAN_CONFIG, False))
+    assert "5 planned of 6 (1 skipped" in text
+    assert "never pending" in text
+    assert "ROI combinations" in text
