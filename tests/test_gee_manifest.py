@@ -51,3 +51,24 @@ def test_atomic_json_write_leaves_no_partial_file(tmp_path):
     manifest.atomic_write_json(path, {"a": 1})
     assert manifest.read_json(path) == {"a": 1}
     assert not list(path.parent.glob("*.part"))
+
+
+def test_carry_over_keeps_earlier_phase_jobs_and_records_the_new_phase():
+    first = manifest.carry_over(None, ["a_2025", "b_2025"], [2025])
+    state = manifest.snapshot("r", "t", first, {"a_2025"}, {})
+    second = manifest.carry_over(state, ["a_2024", "b_2024"], [2024])
+    later = manifest.snapshot("r", "t", second, {"a_2025", "a_2024"}, {})
+    assert later["done"] == ["a_2024", "a_2025"]
+    assert later["pending"] == ["b_2024", "b_2025"]
+    assert [phase["years"] for phase in later["phases"]] == [[2025], [2024]]
+
+
+def test_failure_from_an_earlier_phase_survives_until_the_job_is_done():
+    first = manifest.carry_over(None, ["a_2025"], [2025])
+    failed_state = manifest.snapshot("r", "t", first, set(), {"a_2025": "boom"})
+    second = manifest.carry_over(failed_state, ["a_2024"], [2024])
+    still = manifest.snapshot("r", "t", second, set(), {})
+    assert still["failed"] == {"a_2025": "boom"}
+    fixed = manifest.snapshot("r", "t", second, {"a_2025"}, {})
+    assert fixed["failed"] == {}
+    assert "a_2025" in fixed["done"]

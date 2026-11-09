@@ -90,3 +90,23 @@ def build_state(
         "pending": pending,
         "failed": failed,
     }
+
+
+def carry_over(previous: dict | None, jobs: list[str], years: list[int]) -> dict:
+    names = set(jobs)
+    carried_failed: dict = {}
+    phases: list = []
+    if previous:
+        names |= set(previous["done"]) | set(previous["pending"]) | set(previous["failed"])
+        carried_failed = dict(previous["failed"])
+        phases = list(previous.get("phases", []))
+    phases.append({"years": years, "started_utc": utc_now()})
+    return {"names": sorted(names), "failed": carried_failed, "phases": phases}
+
+
+def snapshot(run_id: str, started_utc: str, carried: dict, done: set[str], failed: dict) -> dict:
+    merged = {**carried["failed"], **failed}
+    open_failures = {name: message for name, message in merged.items() if name not in done}
+    state = build_state(run_id, started_utc, carried["names"], done, open_failures)
+    state["phases"] = carried["phases"]
+    return state
