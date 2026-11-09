@@ -1,0 +1,80 @@
+usgs_run_dir: "data/raw/usgs/iv_20261104"
+gee_root: "data/raw/gee"
+sites_file: "config/sites.yaml"
+roi_flags_file: "config/roi_flags.yaml"
+output_root: "data/interim/matched"
+report_dir: "~/Work/rivwq_CC/02_data_audit"
+qc_primary: standard
+qc_sensitivity:
+  - lenient
+  - strict
+parameters:
+  turbidity: "63680"
+  dissolved_oxygen: "00300"
+  discharge: "00060"
+  stage: "00065"
+targets:
+  - turbidity
+  - dissolved_oxygen
+  - fchl
+covariates:
+  - discharge
+  - stage
+windows_minutes:
+  - 15
+  - 30
+  - 60
+nearest_max_fraction_of_native: 0.5
+nanoseconds_per_minute: 60000000000
+minutes_per_day: 1440
+estimated_qualifier: "ESTIMATED"
+provisional_status: "Provisional"
+approved_status: "Approved"
+sensitivity_sites:
+  - "09180500"
+mostly_empty_share: 0.5
+audit:
+  changeover_site: "01646500"
+  changeover_parameter: "63680"
+  discharge_parameter: "00060"
+  changeover_window_days: 180
+  bootstrap_resamples: 2000
+  bootstrap_block_days: 7
+  bootstrap_seed: 20261109
+  interval_level: 0.95
+  min_days_per_side: 30
+  placebo_first_year: 2018
+  placebo_last_year: 2025
+  first_year: 2018
+  last_year: 2026
+  report_year: 2025
+  waiver_table: "data/processed/gate_c_table_iv.csv"
+  named_qualifiers:
+    Fld:
+      - FLOOD
+      - FLD
+    Bkw:
+      - BACKWATER
+      - BKW
+    Pmp:
+      - PUMPING
+      - PUMPAGE
+      - PMP
+    Zfl:
+      - ZERO_FLOW
+      - ZEROFLOW
+      - ZFL
+    FORCEINTERPOLATION:
+      - FORCEINTERPOLATION
+    REVISED:
+      - REVISED
+gate_a:
+  roi_headline: "reach"
+  erosion_headline: 0
+  cloud_headline: "cs60"
+  valid_fraction_levels:
+    - 0.0
+    - 0.5
+  autocorrelation_max_gap_days: 6.0
+  autocorrelation_clip: 0.99
+  quantiles: 10
