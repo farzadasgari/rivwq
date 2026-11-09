@@ -19,7 +19,7 @@ def harness(monkeypatch, tmp_path):
     failing: set[str] = set()
     area_calls: list[int] = []
 
-    def fake_process(config, gauges, site, year, run_dir, run_start):
+    def fake_process(config, gauges, site, year, run_dir, run_start, rois=None):
         name = export.job_name(site, year)
         if name in failing:
             raise RuntimeError("boom")
@@ -31,7 +31,7 @@ def harness(monkeypatch, tmp_path):
         entry["seconds"] = 1.0
         return entry
 
-    def fake_areas(config, gauges, sites):
+    def fake_areas(config, gauges, sites, plan=None):
         area_calls.append(1)
         return pd.DataFrame({"site_no": sites})
 
@@ -133,7 +133,9 @@ def test_lock_is_released_after_a_normal_run(harness):
 def test_main_passes_the_parsed_years_to_the_run(monkeypatch):
     seen = {}
     monkeypatch.setattr(
-        export, "run", lambda config, run_id, sites, years: seen.update(years=years, run_id=run_id)
+        export,
+        "run",
+        lambda config, run_id, sites, years, skips=None: seen.update(years=years, run_id=run_id),
     )
     export.main(["--mode", "full", "--run-id", "x", "--years", "2025-2026"])
     assert seen == {"years": [2025, 2026], "run_id": "x"}
@@ -142,7 +144,7 @@ def test_main_passes_the_parsed_years_to_the_run(monkeypatch):
 def test_main_without_years_uses_every_year_up_to_today(monkeypatch):
     seen = {}
     monkeypatch.setattr(
-        export, "run", lambda config, run_id, sites, years: seen.update(years=years)
+        export, "run", lambda config, run_id, sites, years, skips=None: seen.update(years=years)
     )
     export.main(["--mode", "full", "--run-id", "x"])
     assert seen["years"][0] == 2018

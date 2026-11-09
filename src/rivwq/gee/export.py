@@ -13,7 +13,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from rivwq.gee import extract, lock, manifest, roi, session, stats, status
+from rivwq.gee import extract, lock, manifest, roi, roi_plan, session, stats, status
 from rivwq.gee import years as year_parser
 
 REPO_ROOT = roi.REPO_ROOT
@@ -98,11 +98,17 @@ def batches(items: list, size: int) -> list[list]:
     return [items[begin : begin + size] for begin in range(0, len(items), size)]
 
 
-def load_geometries(config: dict, gauges: dict, site: str, run_dir: Path) -> dict:
+def load_geometries(
+    config: dict, gauges: dict, site: str, run_dir: Path, rois: list[str] | None = None
+) -> dict:
+    names = rois or list(config["roi"]["variants"])
     path = run_dir / "roi_geometries" / f"{site}.json"
     if path.exists():
-        return manifest.read_json(path)
-    polygons = extract.water_polygons(config, point_for(gauges, site))
+        stored = manifest.read_json(path)
+        if sorted(stored) != sorted(names):
+            raise RuntimeError(f"stored geometries of {site} do not match the ROI plan")
+        return stored
+    polygons = extract.water_polygons(config, point_for(gauges, site), names)
     geometries = {
         name: with_retries(lambda polygon=polygon: polygon.getInfo(), config["retry"])
         for name, polygon in polygons.items()
@@ -149,22 +155,30 @@ def empty_long(config: dict) -> pd.DataFrame:
     return pd.DataFrame(columns=stats.long_columns(config))
 
 
-def tidy_site_year(features: list, site: str, config: dict) -> pd.DataFrame:
+def tidy_site_year(
+    features: list, site: str, config: dict, rois: list[str] | None = None
+) -> pd.DataFrame:
     if not features:
         return empty_long(config)
     wide = stats.scene_table(features, config)
-    return stats.to_long(wide, site, config)
+    return stats.to_long(wide, site, config, rois)
 
 
 def process_site_year(
-    config: dict, gauges: dict, site: str, year: int, run_dir: Path, run_start: datetime
+    config: dict,
+    gauges: dict,
+    site: str,
+    year: int,
+    run_dir: Path,
+    run_start: datetime,
+    rois: list[str] | None = None,
 ) -> dict:
     began = time.monotonic()
-    geometries = load_geometries(config, gauges, site, run_dir)
+    geometries = load_geometries(config, gauges, site, run_dir, rois)
     features = fetch_features(config, gauges, site, year, run_start, geometries)
     name = job_name(site, year)
     write_raw(features, run_dir / "responses" / site / f"{name}.json.gz")
-    tidy = tidy_site_year(features, site, config)
+    tidy = tidy_site_year(features, site, config, rois)
     path = run_dir / "tidy" / site / f"{name}.parquet"
     write_parquet(tidy, path)
     entry = manifest.file_entry(run_dir, path, manifest.utc_now())
@@ -173,11 +187,16 @@ def process_site_year(
     return entry
 
 
-def compute_roi_areas(config: dict, gauges: dict, sites: list[str]) -> pd.DataFrame:
+def compute_roi_areas(
+    config: dict, gauges: dict, sites: list[str], plan: dict[str, list[str]] | None = None
+) -> pd.DataFrame:
     rows = []
     for site in sites:
         longitude, _ = gauges[site]
-        areas = extract.roi_area_table(config, point_for(gauges, site), roi.utm_epsg(longitude))
+        wanted = plan[site] if plan else None
+        areas = extract.roi_area_table(
+            config, point_for(gauges, site), roi.utm_epsg(longitude), wanted
+        )
         values = with_retries(lambda areas=areas: areas.getInfo(), config["retry"])
         for key, value in values.items():
             variant, erosion = key.split("__")
@@ -193,10 +212,18 @@ def compute_roi_areas(config: dict, gauges: dict, sites: list[str]) -> pd.DataFr
 
 
 def initial_manifest(
-    config: dict, run_id: str, run_start: datetime, gauges: dict, sites: list
+    config: dict,
+    run_id: str,
+    run_start: datetime,
+    gauges: dict,
+    sites: list,
+    skips: dict[str, list[str]] | None = None,
 ) -> dict:
     import ee
 
+    chosen = skips or {}
+    plan = roi_plan.site_plan(config, sites, chosen)
+    skipped = sorted(f"{site}:{name}" for site, names in chosen.items() for name in names)
     return {
         "run_id": run_id,
         "run_started_utc": run_start.strftime(manifest.TIMESTAMP_FORMAT),
@@ -209,8 +236,11 @@ def initial_manifest(
                 "saveFirst on system:index; scenes without a match kept, has_cloud_score false"
             ),
         },
-        "roi_hash": roi.roi_hash(gauges, config),
+        "roi_hash": roi.roi_hash(gauges, config, chosen),
         "roi_variants_m": config["roi"]["variants"],
+        "roi_plan": plan,
+        "skipped_site_rois": skipped,
+        "roi_flags_sha256": roi_plan.flags_sha256(config) if chosen else None,
         "sites": sites,
         "bands": stats.band_list(config),
         "band_units": "raw L2A digital numbers, reflectance = DN / 10000, not scaled",
@@ -228,7 +258,12 @@ def initial_manifest(
 
 
 def open_run(
-    config: dict, run_id: str, run_dir: Path, gauges: dict, sites: list[str]
+    config: dict,
+    run_id: str,
+    run_dir: Path,
+    gauges: dict,
+    sites: list[str],
+    skips: dict[str, list[str]] | None = None,
 ) -> tuple[dict, datetime]:
     manifest_path = run_dir / "manifest.json"
     if manifest_path.exists():
@@ -236,28 +271,34 @@ def open_run(
         run_start = datetime.strptime(
             current["run_started_utc"], manifest.TIMESTAMP_FORMAT
         ).replace(tzinfo=UTC)
-        if current["roi_hash"] != roi.roi_hash(gauges, config):
+        if current["roi_hash"] != roi.roi_hash(gauges, config, skips):
             raise RuntimeError("ROI hash differs from the run being resumed")
         if sorted(current["sites"]) != sorted(sites):
             raise RuntimeError("site list differs from the run being resumed")
         return current, run_start
     run_start = datetime.now(UTC).replace(microsecond=0)
-    current = initial_manifest(config, run_id, run_start, gauges, sites)
+    current = initial_manifest(config, run_id, run_start, gauges, sites, skips)
     manifest.atomic_write_json(manifest_path, current)
     return current, run_start
 
 
 def run(
-    config: dict, run_id: str, sites: list[str], years: list[int], raw_root: Path | None = None
+    config: dict,
+    run_id: str,
+    sites: list[str],
+    years: list[int],
+    raw_root: Path | None = None,
+    skips: dict[str, list[str]] | None = None,
 ) -> dict:
     session.initialize()
     gauges = roi.load_gauges(REPO_ROOT / config["roi"]["gauges_file"])
     run_dir = (raw_root or REPO_ROOT / config["raw_root"]) / run_id
+    active = {site: names for site, names in (skips or {}).items() if site in sites}
     lock_path = run_dir / LOCK_NAME
     lock.acquire(lock_path)
     try:
-        current, run_start = open_run(config, run_id, run_dir, gauges, sites)
-        return run_locked(config, gauges, run_dir, current, run_start, sites, years)
+        current, run_start = open_run(config, run_id, run_dir, gauges, sites, active)
+        return run_locked(config, gauges, run_dir, current, run_start, sites, years, active)
     finally:
         lock.release(lock_path)
 
@@ -270,8 +311,10 @@ def run_locked(
     run_start: datetime,
     sites: list[str],
     years: list[int],
+    skips: dict[str, list[str]] | None = None,
 ) -> dict:
     run_id = current["run_id"]
+    plan = roi_plan.site_plan(config, sites, skips or {})
     manifest_path = run_dir / "manifest.json"
     state_path = run_dir / "run_state.json"
     for leftover in status.remove_partial_files(run_dir):
@@ -293,7 +336,7 @@ def run_locked(
         for item in current["files"]
     )
     if not areas_entry_ok:
-        write_parquet(compute_roi_areas(config, gauges, sites), areas_path)
+        write_parquet(compute_roi_areas(config, gauges, sites, plan), areas_path)
         current = manifest.upsert_entry(
             current, manifest.file_entry(run_dir, areas_path, manifest.utc_now())
         )
@@ -303,7 +346,7 @@ def run_locked(
         site, year = job
         name = job_name(site, year)
         try:
-            entry = process_site_year(config, gauges, site, year, run_dir, run_start)
+            entry = process_site_year(config, gauges, site, year, run_dir, run_start, plan[site])
         except Exception as error:
             with guard:
                 failed[name] = f"{type(error).__name__}: {error}"
@@ -362,4 +405,6 @@ def main(argv: list[str] | None = None) -> None:
         return
     if not args.run_id:
         raise SystemExit("full mode needs --run-id so a resume reuses the same run")
-    run(config, args.run_id, all_sites(config), chosen or all_years(today, config))
+    sites = all_sites(config)
+    skips = roi_plan.skips_from_flags(config, sites)
+    run(config, args.run_id, sites, chosen or all_years(today, config), skips=skips)
