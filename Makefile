@@ -1,7 +1,7 @@
 PY := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 YEARS_OPTION := $(if $(YEARS),--years $(YEARS),)
 
-.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest site-rules-iv gee-pilot gee-full gee-start gee-stop gee-status gee-checks roi-connectivity roi-flags check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
+.PHONY: scout width-cloud gate-c sites download-iv qc-iv qc-rules harden-manifest site-rules-iv gee-pilot gee-full gee-start gee-stop gee-status gee-checks roi-connectivity roi-flags roi-plan check test lint nocomments all step-01 step-02 step-03 step-04 step-05 step-06 step-07 step-08 step-09
 
 check: lint test nocomments
 
@@ -97,3 +97,6 @@ roi-connectivity:
 roi-flags:
 	$(PY) pipeline/roi_flags.py
 	$(PY) pipeline/roi_flags.py --check-only
+
+roi-plan:
+	$(PY) pipeline/roi_plan.py
