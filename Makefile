@@ -100,3 +100,15 @@ roi-flags:
 
 roi-plan:
 	$(PY) pipeline/roi_plan.py
+
+.PHONY: match
+match:
+	$(PY) pipeline/build_matched_table.py --gee-run-id $(GEE_RUN_ID)
+
+.PHONY: match-audits
+match-audits:
+	$(PY) pipeline/matching_audits.py
+
+.PHONY: gate-a
+gate-a:
+	$(PY) pipeline/gate_a_report.py --gee-run-id $(GEE_RUN_ID) $(if $(PREFIX),--prefix $(PREFIX),)
