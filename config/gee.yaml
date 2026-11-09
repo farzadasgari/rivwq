@@ -1,27 +1,73 @@
 project_environment_variable: EARTHENGINE_PROJECT
 collections:
-  surface_reflectance: null
-  cloud_score: null
-bands: null
-scale_m: null
-crs: null
-tile_scale: null
-reducers:
-  - mean
-  - median
-  - stdDev
-  - count
+  surface_reflectance: COPERNICUS/S2_SR_HARMONIZED
+  cloud_score: GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED
+  surface_water: JRC/GSW1_4/GlobalSurfaceWater
+bands:
+  reflectance: [B1, B2, B3, B4, B5, B6, B7, B8, B8A, B9, B11, B12]
+  atmosphere: [AOT, WVP]
+  scene_classification: SCL
+  cloud_score: cs_cdf
+  footprint: B2
+  occurrence: occurrence
+scale_m: 10
+crs: native B2 projection of each scene
+tile_scale: 4
+max_pixels: 10000000000
+reducers: [mean, median, stdDev]
 masks:
+  water_occurrence_min: 50
+  gauge_seed_distance_m: 100
+  connectivity_max_path_m: 25000
+  gsw_scale_m: 30
+  erosion_pixels: [0, 1]
+  erosion_kernel: plus
+  cloud_score_thresholds: [0.5, 0.6, 0.7]
+  scl_valid_classes: [4, 5, 6]
+roi:
+  gauges_file: config/rois/gauges.geojson
   variants:
-    - cloud_score_plus
-    - scene_classification
-  cloud_score_threshold: null
-  water_index_threshold: null
-  edge_buffer_m: null
-  minimum_valid_pixel_fraction: null
-date_ranges:
-  - start: null
-    end: null
+    near_gauge: 1000
+    reach: 5000
+    extended: 20000
+date_start: "2018-01-01"
 chunking:
   by: year
   max_features_per_request: 5000
+  scenes_per_request: 1
+spacecraft:
+  Sentinel-2A: S2A
+  Sentinel-2B: S2B
+  Sentinel-2C: S2C
+scene_properties:
+  MGRS_TILE: mgrs_tile
+  SENSING_ORBIT_NUMBER: relative_orbit
+  SPACECRAFT_NAME: spacecraft
+  PROCESSING_BASELINE: processing_baseline
+  MEAN_SOLAR_ZENITH_ANGLE: solar_zenith
+  MEAN_SOLAR_AZIMUTH_ANGLE: solar_azimuth
+  MEAN_INCIDENCE_ZENITH_ANGLE_B8A: view_zenith_b8a
+  MEAN_INCIDENCE_AZIMUTH_ANGLE_B8A: view_azimuth_b8a
+  CLOUDY_PIXEL_PERCENTAGE: cloudy_pixel_percentage
+  system:time_start: time_start_ms
+raw_root: data/raw/gee
+log_dir: data/interim/gee_logs
+pilot:
+  sites: ["06887500", "03378500"]
+  years: [2023, 2025]
+retry:
+  attempts: 5
+  backoff_seconds: 10
+  quota_wait_seconds: 600
+  quota_attempts: 12
+workers: 2
+checks:
+  stable_bands: [B8A, B11, B12]
+  split_year: 2025
+  sites: ["06887500", "03378500"]
+  reference_roi: reach
+  reference_erosion: 1
+  reference_cloud: cs60
+  jump_threshold_relative: 0.05
+  minimum_scenes_per_group: 5
+  minimum_scenes_per_month: 3
