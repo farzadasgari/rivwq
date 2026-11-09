@@ -76,7 +76,7 @@ def test_unknown_spacecraft_fails_loudly():
         stats.spacecraft_code("Sentinel-2D", CONFIG["spacecraft"])
 
 
-def feature_for(config: dict, name: str = "Sentinel-2C") -> dict:
+def feature_for(config: dict, name: str = "Sentinel-2C", rois: list[str] | None = None) -> dict:
     properties = {
         "system_index": "20250101T000000_20250101T000000_T14SQJ",
         "MGRS_TILE": "14SQJ",
@@ -91,7 +91,7 @@ def feature_for(config: dict, name: str = "Sentinel-2C") -> dict:
         "system:time_start": 1735689600000,
         "has_cloud_score": True,
     }
-    for roi_name in config["roi"]["variants"]:
+    for roi_name in rois or list(config["roi"]["variants"]):
         for erosion in config["masks"]["erosion_pixels"]:
             properties[stats.total_name(roi_name, erosion)] = 100
             for tag in stats.cloud_tags(config):
@@ -111,3 +111,20 @@ def test_long_table_shape_and_columns():
     assert set(long["spacecraft"]) == {"S2C"}
     assert long["valid_fraction"].iloc[0] == pytest.approx(0.8)
     assert long["time_utc"].iloc[0] == pd.Timestamp("2025-01-01", tz="UTC")
+
+
+def test_long_table_only_has_the_requested_rois():
+    kept = ["near_gauge", "reach"]
+    wide = stats.scene_table([feature_for(CONFIG, rois=kept)], CONFIG)
+    long = stats.to_long(wide, "123", CONFIG, kept)
+    assert len(long) == 2 * 2 * 4
+    assert set(long["roi"]) == set(kept)
+    assert "extended" not in set(long["roi"])
+    assert list(long.columns) == stats.long_columns(CONFIG)
+
+
+def test_asking_for_a_roi_that_was_not_extracted_fails_loudly():
+    kept = ["near_gauge", "reach"]
+    wide = stats.scene_table([feature_for(CONFIG, rois=kept)], CONFIG)
+    with pytest.raises(KeyError):
+        stats.to_long(wide, "123", CONFIG)

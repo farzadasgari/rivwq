@@ -149,12 +149,14 @@ def long_columns(config: dict) -> list[str]:
     return META_COLUMNS + keys + counts + value_columns
 
 
-def to_long(wide: pd.DataFrame, site: str, config: dict) -> pd.DataFrame:
+def to_long(
+    wide: pd.DataFrame, site: str, config: dict, rois: list[str] | None = None
+) -> pd.DataFrame:
     meta_columns = META_COLUMNS
     bands = band_list(config)
     reducers = list(REDUCER_SUFFIX.values())
     pieces = []
-    for roi in config["roi"]["variants"]:
+    for roi in rois or list(config["roi"]["variants"]):
         for erosion in config["masks"]["erosion_pixels"]:
             for tag in cloud_tags(config):
                 piece = wide[meta_columns].copy()
